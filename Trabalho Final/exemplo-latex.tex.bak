@@ -1,0 +1,142 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[portuguese,algoruled,longend]{algorithm2e}
+\usepackage{sobrapo-template}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{mathrsfs}
+\usepackage{array}
+\usepackage{rotating}
+\usepackage{listings}
+
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+
+\usepackage{indentfirst}
+
+\title{\Large{Métodos Numéricos \\ Lista 1} }
+
+\begin{document}
+
+\maketitle
+
+
+\author{
+\name{Celio Henrique Nogueira Larcher Junior}
+}
+
+\vspace{1.0cm}
+
+
+\noindent \textbf{Exercício 1} Considerando $f(x)=sin(x)$ e estabelecendo os polinômios de Taylor em $a=\pi/4$, o polinômio linear de Taylor pode ser obtido pela fórmula:
+
+$$P_1(x)=f(a)+f'(a)(x-a)$$
+
+\noindent onde, para as condições estabelecidas se torna:
+
+$$P_1(x)=\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}(x-\pi/4)$$
+
+Da mesma fora, o polinômio quadrático pode ser estabelecido pela fórmula:
+
+$$P_2(x)=f(a)+f'(a)(x-a)+\frac{f''(a)}{2}(x-a)^2$$
+
+\noindent e, com o estabelecimento das condições, tem-se:
+
+$$P_2(x)=\frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}(x-\pi/4)-\frac{\sqrt{2}}{4}(x-\pi/4)^2$$
+
+A Figura \ref{fig:ex11} mostra ambos os polinômios representados no intervalo $[0,\pi/2]$, bem como o comportamento da função $f(x)=sin(x)$ neste trecho. A Figura \ref{fig:ex12} demonstra o erro das aproximações dos polinômios utilizados.
+
+\begin{figure}[ht]
+ 	\begin{center}
+ 	 	  \includegraphics[scale=0.6]{figs/ex1_1.png}	
+  		  \caption{Aproximação da função $f(x)=sin(x)$ através de polinômios de Taylor linear e quadrático}
+  		  \label{fig:ex11}
+	\end{center}
+\end{figure}
+
+
+\begin{figure}[ht]
+ 	\begin{center}
+ 	 	  \includegraphics[scale=0.6]{figs/ex1_2.png}	
+ 	 	  \caption{Erro cometido nas aproximações linear e quadrática dos polinômios de Taylor centrados em $\pi/4$}
+		  \label{fig:ex12}
+	\end{center}
+\end{figure}	
+
+\newpage
+
+\vspace{0.3cm}
+Como pode ser observado, o erro apresentado pela aproximação do polinômio de Taylor linear é maior do que o erro apresentado pela aproximação quadrática. Esta observação corrobora a análise do erro para estes polinômios via Teorema de Taylor, onde o erro em $P_1(x)$ é $Err_1=\frac{f''(\varepsilon)}{2}(x-a)^2 \leq \frac{1}{2}(x-a)^2$ e em $P_2(x)$ é $Err_2=\frac{f'''(\varepsilon)}{6}(x-a)^3 \leq \frac{1}{6}(x-a)^3$, com $\varepsilon \in [a,x]$. Estas expressões demonstram que a cota superior de $Err_1$ é maior se comparada a $Err_2$.
+
+Outra observação interessante é que o erro aumenta a medida que a aproximação se afasta de $a=\pi/4$, o que também corrobora com as expressões para o erro destes polinômios.
+
+
+\vspace{0.5cm}
+\noindent \textbf{Exercício 2} A função $f(x)=x^{\frac{1}{3}}$ não pode ser aproximada por um polinômio de Taylor linear em $x_0=0$, pois a derivada primeira não é definida para este ponto:
+
+\vspace{0.3cm}
+
+$$f'(0)=\frac{1}{3*0^{\frac{2}{3}}}=\frac{1}{0} \notin \Re $$ 
+
+\vspace{0.3cm}
+
+Já para o ponto $x_0=1$ é possível aproximar a função por um polinômio linear de Taylor desde que o intervalo em que o polinômio será utilizado não contenha o ponto $x=0$. Caso o contenha, o Teorema de Taylor não será válido e não há garantia alguma acerca do erro cometido.
+
+%$$f'(x)=\frac{1}{3x^{\frac{2}{3}}}$$
+\vspace{0.5cm}
+\noindent \textbf{Exercício 3} 
+
+\noindent a) Utilizando-se da expressão para o polinômio quadrático de Taylor, é possível escrever a aproximação de $f(x)=x^3$ da seguinte maneira:
+
+$$P_2(x)=f(a)+f'(a)(x-a)+\frac{f''(a)}{2}(x-a)^2$$
+
+$$P_2(x)=0 + 0 (x-0)+ 0 (x-0)^2=0$$
+
+O polinômio determinado $P_2(x)$ é constante e igual a 0.
+
+\vspace{0.3cm}
+
+\noindent b) Da mesma forma, como a função atende os requisitos do Teorema de Taylor, é possível estabelecer uma expressão para o erro, em termos:
+
+$$R_2(x)= \frac{f'''(\varepsilon)}{3!}(x-0)^3=x^3$$
+
+Note que o valor de $f'''(\varepsilon)=6$ é constante para qualquer ponto em $\Re$ e o erro pode ser determinado exatamente sem conhecimento do valor original da função. Interessante também que o erro apresenta a mesma expressão da função $f(x)$ dado que o polinômio encontrado anteriormente é constante e de valor 0, respeitando $f(x)=P_2(x)+R_2(x)$.
+
+Em particular, analisando no ponto $x=0.5$, tem-se:
+
+$$R_2(0.5)=(0.5)^3=0.125=f(0.5)-P_2(0.5)=0.125-0$$
+
+O que corrobora a análise anterior, o polinômio $P_2(x)$ é nulo em $a=0$ e o erro é igual ao valor da função $f(x)$.
+
+\vspace{0.5cm}
+\noindent \textbf{Exercício 4} Considerando a aproximação de $\sqrt{2}$ como 1.4, pode-se escrever $\sqrt{2}=1.4+\epsilon$, onde $\epsilon$ é o erro cometido na aproximação.
+
+Analisando as opções de expressão e reescrevendo $\sqrt{2}$, tem-se as seguintes expressões:
+\vspace{0.3cm}
+
+\noindent 1) $f=(1.4+\epsilon-1)^6$ onde tem-se o erro da ordem de $O(\epsilon^6)$
+\vspace{0.2cm}
+
+\noindent 2) $f=\frac{1}{(1.4+\epsilon+1)^6}$ onde tem-se o erro da ordem de $O(\frac{1}{\epsilon^6})$
+\vspace{0.2cm}
+
+\noindent 3) $f=(3 - 2 (1.4+\epsilon))^3$ onde tem-se o erro da ordem de $O(\epsilon^3)$
+\vspace{0.2cm}
+
+\noindent 4) $f=\frac{1}{(3 + 2 (1.4+\epsilon))^3}$ onde tem-se o erro da ordem de $O(\frac{1}{\epsilon^3})$
+\vspace{0.2cm}
+
+\noindent 5) $f=99 - 70 (1.4+\epsilon)$ onde tem-se o erro da ordem de $O(\epsilon)$
+\vspace{0.2cm}
+
+\noindent 6) $f=\frac{1}{99 + 70 (1.4+\epsilon)}$ onde tem-se o erro da ordem de $O(\frac{1}{\epsilon})$
+
+
+\vspace{0.5cm}
+\noindent \textbf{Exercício 5} Considerando a expressão $y=ab^2 /\sqrt{c}$
+
+
+\end{document}
+

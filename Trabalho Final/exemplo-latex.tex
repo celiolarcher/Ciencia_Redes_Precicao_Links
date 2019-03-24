@@ -1,0 +1,657 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[portuguese,algoruled,longend]{algorithm2e}
+\usepackage{sobrapo-template}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{mathrsfs}
+\usepackage{array}
+\usepackage{rotating}
+\usepackage{listings}
+
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+
+\usepackage{indentfirst}
+
+\title{\Large{Ciência de Redes} \\ \Large{Aprendizado Supervisionado Aplicado à Predição de Links}}
+
+\begin{document}
+
+\maketitle
+
+
+\author{
+\name{Celio Henrique Nogueira Larcher Junior}
+}
+
+\vspace{1.0cm}
+
+\section{Introdução}
+
+\vspace{0.5cm}
+
+A utilização de redes é alternativa promissora para modelagem de diversos problemas do mundo real, tendo especificamente a representação das conexões entre nós grande significância em vários destes contextos. Neste rumo, o problema de predição de links em uma rede passa a apresentar grande interesse para uma vasta gama destas aplicações, dado que em tais situações a possibilidade de identificar novas conexões é informação extremamente relevante. Exemplos de tais aplicações são sistemas de recomendação de compras, indicações para novas colaborações acadêmicas e análise de possíveis conexões em redes de contado de terroristas.
+
+Simplificadamente o problema de predição de links pode ser descrito com o seguinte enunciado: dado a situação de um grafo dinâmico G=(V,E) em um instante de tempo qualquer, deseja-se saber quais conexões são mais prováveis de acontecer em algum momento no futuro.% pares de nós ainda não conectados. 
+
+Na literatura observam-se trabalhos que buscam associar informações da estrutura da rede a dados provenientes do domínio da aplicação, possibilitando fornecer um modelo  acurado e de boa capacidade preditiva, mas limitando o escopo da abordagem desenvolvida \cite{Mohammad06, Sa11}. Em outro rumo, foram observadas abordagens generalistas que envolvem apenas a estrutura da rede, utilizando medidas como distribuição de grau, semelhança entre nós, cálculos de distâncias, entre outras \cite{Cukierski11}. Esta segunda opção será escolhida neste trabalho.
+
+Relacionado as abordagens generalistas, um grande esforço é posto no desenvolvimento de técnicas voltadas a medidas baseadas em similaridade, sejam estas com escopo local, como análise de vizinhança, ou com escopo global, como análises de caminho mais curto, sendo que um estudo de diversas destas técnicas pode ser visto em \cite{Martinez16}.
+
+Uma outra opção não tão abordada está na utilização de técnicas de aprendizado de supervisionado. A predição de links pode ser vista como um problema de classificação, onde, para cada par de vértices, estes podem estar ou não conectados. É possível então extrair atributos da rede de forma às informações relativas a cada par de nós se apresentarem como dados de entrada para um sistema de aprendizado. Seguindo este procedimento, as mais diversas técnicas de aprendizado supervisionado são passíveis de serem aplicadas, sendo necessário identificar quais atributos devem ser utilizados. Alguns exemplos de trabalhos seguindo esta linha são \cite{Mohammad06, Benchettara10, Cukierski11, Sa11}.
+
+%Muitas abordagens desenvolvidas para o problema de predição de links buscam a utilização de técnicas de aprendizado não-supervisionado, que buscam através de características locais do grafo os links mais prováveis. Esta, apesar de ser uma abordagem interessante não se utiliza, em geral, de uma visão global da rede podendo levar a um resultado ruim, especialmente em redes esparsas.
+
+%Técnicas de aprendizado supervisionado, por outro lado, tem um enfoque maior na situação global da rede, sendo capazes de generalizar situações envolvendo diferentes vizinhanças, mas necessitam de um pré-processamento da rede em questão.
+
+Neste sentido, dadas as diversas métricas possíveis de serem extraídas da estrutura de uma rede, este trabalho espera verificar quais dentre estas são mais adequadas ao problema de predição de links via aprendizagem de máquina. De fato, é provável que técnicas diferentes de aprendizagem possam ter melhor desempenho com um conjunto diverso de atributos. Da mesma forma, diferentes instâncias possivelmente terão inclinação maior a alguns atributos em detrimento de outros, mas espera-se que, pelo menos, um subconjunto promissor possa ser identificado, além da possibilidade de se observar qual papel os atributos básicos da rede possuem neste problema.
+
+Ainda é relevante comentar que, sendo esta uma abordagem generalista do problema, não serão considerados atributos específicos a qualquer domínio de aplicação, limitando-se a verificação apenas daqueles relacionados a estrutura da rede.
+
+
+\vspace{0.5cm}
+\section{Algoritmos de aprendizado supervisionado}
+\vspace{0.5cm}
+
+
+Algoritmos de aprendizado supervisionado são uma classe de algoritmos que tem como objetivo a previsão do valor de algum atributo especificado para uma amostra (atributo de saída), através dos valores presentes nos demais atributos desta mesma amostra (atributos de entrada). A descoberta das relações entre os atributos é feita através de um processo denominado treinamento, que consiste na apresentação de diversos exemplos com o correspondente valor esperado de saída, para que o algoritmo seja capaz de aprender e generalizar as relações existentes entre atributos. Espera-se que, após o treinamento, os modelos gerados pelos algoritmos sejam capaz de inferir valores para o atributo de saída em novas amostras não apresentadas anteriormente.
+
+Seguindo este princípio, existe uma vasta gama de algoritmos de aprendizagem supervisionada, utilizando-se de diferentes abordagens para generalização dos dados. Neste sentido para uma avaliação mais acurada do comportamento dos atributos da rede, buscou-se selecionar um subconjunto dos algoritmos de aprendizagem que abrangesse diferentes tipos de abordagens, mas também guiando a escolha pela popularidade das técnicas.
+Desta forma, os seguintes algoritmos foram utilizados para avaliação das métricas das redes para a predição de \textit{links}: 
+
+\begin{itemize}
+	\item Árvore de Decisão (J48);
+	\item Random Forest;
+	\item Suport Vector Machine (SMO);
+	\item Naive Bayes;
+\end{itemize}
+
+
+A implementação destes algoritmos foi obtida da ferramenta \textit{Weka} \cite{Witten05}, popular \textit{framework} de mineração de dados. Ainda, para as  técnicas que necessitam de alguma forma de parametrização, foram utilizados os valores padrões da ferramenta.
+
+
+\vspace{0.5cm}
+
+
+\section{Predição de \textit{links} e aprendizado supervisionado}
+
+\vspace{0.5cm}
+
+%O problema de predição de \textit{links}, como comentado, busca encontrar possíveis pontos de conexão em um instante futuro, considerando uma rede variante no tempo, sendo este instante futuro delimitado por uma janela de tempo (isto é, dado o instante atual $t$, espera-se realizar previsões das novas conexões ocorridas no intervalo entre $t$ e $t+\Delta t$, onde $\Delta t$ é a janela de tempo investigada). Desta forma, espera-se que, baseado nas informações da rede no estado presente, sejam identificadas características que tornem possível esta inferência. Neste sentido, o problema se adequa de forma interessante ao aprendizado supervisionado, dado que os algoritmos tem como foco encontrar características dos dados que os tornem capaz de generalizar resultados para novas observações. 
+
+O problema de predição de \textit{links}, como comentado, busca encontrar possíveis pontos de conexão em um instante futuro, considerando uma rede variante no tempo. De maneira mais detalhada, tem-se a seguinte descrição: dado a situação de um grafo variante no tempo $G=(V,E,t)$ no instante de tempo $t$, espera-se realizar previsões para novas conexões que possam ocorrer no intervalo ($t$ ,$t+\Delta t$), onde $\Delta t$ é a janela de tempo investigada. Desta forma, espera-se que, baseado nas informações da rede no estado presente ($t$), sejam identificadas características que tornem possível esta inferência. Neste sentido, o problema se adequa de forma interessante ao aprendizado supervisionado, dado que os algoritmos tem como foco encontrar características dos dados que os tornem capaz de generalizar resultados para novas observações. 
+
+
+Seguindo este princípio, o problema de predição de \textit{links} pode ser visto como um problema de classificação, onde a partir das informações relativas a um par de nós, existem duas classes possíveis: ``uma aresta entre determinado par de nós surgirá em um intervalo de tempo futuro'' e ``não é esperado que surja uma aresta entre este par de nós neste intervalo de tempo''. Ainda, apresentando um conjunto de amostras com exemplos de pares de nós não conectados, com estas contendo tanto casos onde surgirão arestas no intervalo de tempo em questão, quanto casos em que as arestas se manterão ausentes, é possível buscar características que generalizem os dois estados de forma a possibilitar a previsão de novas arestas neste grafo em intervalos de tempo subsequentes.
+
+Apesar desta adaptação natural, uma dificuldade na utilização desta abordagem está em, a princípio, as redes não apresentam uma estrutura que torne viável o treinamento de técnicas de aprendizado, dado que as informações, especialmente relacionadas a estrutura da rede, não estão explicitas para verificação. 
+Desta forma, para criação do conjunto de treinamento e posterior submissão de novas amostras, é necessário o pré-processamento do grafo, quando serão recolhidas as informações julgadas pertinentes para cada par de nós. 
+
+Ainda, este é um procedimento que pode se tornar proibitivo a depender do conjunto de atributos verificados e a dimensão da rede. Apesar disto, em métricas de conhecimento local ou em redes de dimensão pouco elevada, este fator não se torna um impeditivo podendo os algoritmos possuírem um bom desempenho.
+
+\vspace{0.5cm}
+
+\section{Treinamento no problema de predição de \textit{links}}
+
+\vspace{0.5cm}
+
+%A etapa de treinamento de um algoritmo de aprendizado supervisionado consiste na apresentação de um conjunto de exemplos que já se possui a resposta de forma a que a técnica possa criar uma generalização destes exemplos e assim ser capaz de responder a outros exemplos não vistos anteriormente.
+
+Como comentado, numa fase anterior ao treinamento dos algoritmos é necessário o processamento do grafo para construção da base de treinamento. Para isto, foram selecionados pares de nós correspondendo a uma fração do número de arestas ($10 \%$), sendo estes nós desconectados no momento presente. Em cada par selecionado foi realizado o cômputo dos atributos definidos para o treinamento, além de ser adicionada a informação relativa a existência de uma futura aresta ou se esta permanece ausente, identificando a que classe o par em questão pertence.
+Buscou-se ainda que a construção deste conjunto o torne balanceado, com o número de amostras em cada uma das classes semelhante. 
+Como atributos foram utilizados: 
+
+\begin{itemize}
+	\item caminho mais curto entre os vértices do par (\textit{short\_path})
+	\item número de vizinhos em comum entre os vértices do par (\textit{common\_neighbors})
+	\item grau de ambos os vértices (\textit{degree\_H}, \textit{degree\_L})
+	\item centralidade por intermediação de ambos os vértices (\textit{betweenness\_centrality\_H}, \textit{betweenness\_centrality\_L})
+	\item centralidade por proximidade de ambos os vértices (\textit{closeness\_centrality\_H}, \textit{closeness\_centrality\_L})
+	\item centralidade por auto-vetor de ambos os vértices (\textit{eigenCentrality\_H}, \textit{eigenCentrality\_L})
+	\item coeficiente de clusterização de ambos os vértices (\textit{clustering\_H}, \textit{clustering\_L})
+	\item excentricidade de ambos os vértices (\textit{eccentricity\_H}, \textit{eccentricity\_L})
+\end{itemize}
+
+Os atributos relativos a características do nó (portanto aparecendo em pares) foram discriminados de forma ao de maior valor se apresentar sempre em um dos campos do conjunto de treinamento (com sufixo \textit{\_H}), enquanto o de menor valor é atribuído ao campo restante (com sufixo \textit{\_L}), fato que ocorre independentemente a que nó os valores pertençam. Exemplificando esta prática, tomando um par de nós qualquer ($\alpha$,$\beta$), onde o nó $\alpha$ tem grau $5$ e coeficiente de clusterização $0.3$ e o nó $\beta$ tem grau $7$ e coeficiente de clusterização $0.1$, ao realizar a indexação  deste par a seguinte relação de atributos e campos seria estabelecida: \textit{degree\_H}=$7$, \textit{degree\_L}=$5$, \textit{clustering\_H}=0.3 e \textit{clustering\_L}=$0.1$. Esta prática é adotada de forma a diminuir o espaço de busca e homogeneizar os dados utilizados para treinamento e avaliação.
+
+
+%Como atributos foram utilizados: o caminho mais curto entre os vértices, valor do grau, medidas de centralidade por intermediação (\textit{betweenness}), por proximidade (\textit{closeness}) e por auto-valor (\textit{eigen centrality}), o coeficiente de clusterização, a excentricidade do nó e o número de vizinhos em comum do par de nós. Os atributos relativos aos nós (portanto em pares) foram discriminados de forma ao de maior valor se apresentar em um dos atributos do conjunto de treinamento e o de menor valor no outro atributo, independente a que nó os valores pertençam. Esta prática foi adotada de forma a diminuir o espaço de busca e homogeneizar os dados.
+
+Um ponto a ser comentado, neste trabalho não foram utilizados grafos variantes no tempo, escopo do problema abordado. Em seu lugar, grafos estáticos foram alterados de forma a simular o comportamento variante no tempo, procedimento apresentado na subseção a seguir.
+
+\vspace{0.3cm}
+
+\subsection{Criação do conjunto de treinamento com grafos estáticos}
+
+\vspace{0.3cm}
+
+De maneira simples, a conversão de grafos estáticos em ``grafos variantes no tempo'' foi feita alterando a rede através da remoção de algumas arestas, sendo estas  consideradas as arestas a serem adicionadas no intervalo de tempo futuro analisado. 
+
+Seguindo esta ideia, o procedimento consistiu em selecionar aleatoriamente um subconjunto de arestas do grafo e removê-las, mantendo apenas a informação da existência das mesmas. A partir deste estado, o grafo passa a ser considerado um grafo variante no tempo, tendo o conjunto de arestas removidas do grafo, inseridas em uma lista de pares de nós a entrar na base de treinamento e sendo estes marcados como pares de nós que receberão no futuro uma conexão. 
+À mesma lista se juntam pares de nós sem aresta (marcados como pares de nós que não receberão conexão) até que esta possua como tamanho a porcentagem determinada do número de arestas inicial ($10\%$), com cada classe tendo aproximadamente o mesmo número de amostras.
+Por fim, em posse da lista de pares de vértices que irão compor a base de treinamento, é feito o cômputo das métricas verificadas, dando origem à base de treinamento.
+
+Um fator a ser comentado, apesar da remoção ocorrer aleatoriamente, busca-se preservar a conectividade do grafo no processo de construção destes grafos variantes no tempo. Desta forma, em grafos que se apresentam inicialmente conexos, repete-se o sorteio para cada escolha de aresta que resulte na quebra da componente conexa.
+
+
+
+\vspace{0.5cm}
+
+\section{Experimentos}
+
+\vspace{0.5cm}
+
+
+Para realização dos experimentos foram utilizados inicialmente grafos artificiais criados segundo os modelos Gnp, SmallWorld e Preferential Attachment. A parametrização utilizada para cada modelo pode ser vista a seguir:
+
+\begin{itemize}
+	\item GNP: 10.000 vértices e probabilidade de conexão 0.001;
+	\item Small World: 10.000 vértices, 10 conexões entre vizinhos e probabilidade de reconexão 0.1;
+	\item Preferential Attachment: 10.000 vértices e 5 arestas por inserção de vértice
+\end{itemize}
+
+Os grafos resultantes destes modelos são conexos, com 10.000 vértices e aproximadamente 50.000 arestas. Os parâmetros dos modelos Small World e Preferential Attachment foram definidos buscando que os grafos tenham um número de arestas semelhante ao obtido no Gnp. Ainda, a probabilidade de reconexão do modelo Small World tem como objetivo acentuar suas características, via maximização do índice \textit{smallworldness} \cite{Humphries08}. 
+
+Estes grafos são utilizados para identificação do subconjunto de atributos de destaque na tarefa de predição de \textit{links}, tendo em vista que cada um destes modelos apresenta características diversas e, neste sentido, a análise destes modelos pode representar uma generalização razoável do comportamento esperado para outros grafos. %passíveis de serem encontradas em outros grafos.
+
+
+%novos parâmetros
+%SW n=10000 k=10 p=0.1
+%PA n=10000, m=5
+
+
+%GNP n=10000, p=0.001, arestas=50041, treinamento=5004, conexo
+%SW n=10000 k=10 p=0.1, arestas=50000, treinamento=5000, conexo
+%PA n=10000, m=5, arestas=49975, treinamento=4997, conexo
+
+%. k=50 e m=25 de forma a manter o número de arestas semelhante ao do modelo GNP
+
+
+%Ainda foi utilizado um grafo do repositório ..., denominado \textit{newmovies}, representando uma rede de conexões de filmes e artistas\textbf{?}. Todas as redes utilizadas nos experimentos são referentes a grafos não direcionados, por simplicidade. 
+
+\vspace{0.3cm}
+\subsection{Analise dos atributos em grafos artificiais}
+\vspace{0.3cm}
+
+Para avaliação de cada atributo, segundo os algoritmos de classificação, foi utilizado o módulo \textit{classifierBasedAttributeSelection} presente na ferramenta Weka, com avaliação realizada via quantificação do impacto individual dos atributos. De maneira mais detalhada, a avaliação do conjunto de atributos ocorre com as técnica de aprendizado sendo submetidas as etapas de treinamento e avaliação com a utilização de apenas um atributo por vez, procedimento repetido para cada um dos atributos. De posse dos resultados desta sequência de experimentos, o ganho atribuído a cada atributo é dada pela margem de performance da classificação superior a um \textit{random guest} (classificação por sorteio), sendo a área sobre a curva (AUC) utilizada como métrica de desempenho na classificação e tendo como metodologia de verificação dos resultados a validação cruzada via modelo 5-fold.
+
+%Neste, com a escolha da técnica de classificação, é feito o treinamento e a avaliação da técnica com a utilização de todos os atributos. Após esta etapa, repete-se o procedimento de treinamento e avaliação, mas com a retirada de um dos atributos do conjunto, verificando o impacto da ausência deste no desempenho da classificação. Tem-se esta execução para todos os atributos, sendo, ao fim, possível saber o impacto individual da ausência de cada atributo. Para avaliação foi utilizada a opção de validação cruzada com o modelo 5-fold e a área sobre a curva (AUC) como métrica de avaliação.
+
+%Os resultados obtidos pelos experimentos com ganho de cada atributo por método de classificação podem ser vistos nas Tabelas \ref{tab:gainGnp}, \ref{tab:gainSW} e \ref{tab:gainPA} correspondendo respectivamente aos grafos dos modelos Gnp, Small World e Prefferential Attachment. Os atributos que aparecem duplicados (presentes em ambos os vértices) tem os indicativos \_H (maior valor do atributo no par) e \_L (menor valor do atributo no par) de forma a diferencia-los. Ainda, em destaque, os atributos com contribuição positiva na classificação.
+
+A Tabela \ref{tab:attrModel} apresenta o somatório do ganho dos atributos em cada uma das técnicas de aprendizado, categorizado por modelo de grafo, com a coluna Total mostrando o somatório do desempenho nos três modelos. A tabela é ordenada pelo ganho apresentado na coluna Total, estando em negrito os 5 atributos de maior valor em cada modelo. 
+
+
+
+\begin{table}[htbp]
+\caption{Ganho dos atributos na classificação por modelo de grafo}
+\center
+\begin{tabular}{|l|r|r|r|r|}
+\hline
+Atributos & \multicolumn{1}{l|}{GNP (Ganho)} & \multicolumn{1}{p{2cm}|}{Small World (Ganho)} & \multicolumn{1}{p{2.5cm}|}{Prefferential Attachment (Ganho)} & \multicolumn{1}{l|}{Total} \\ \hline \hline
+short\_path & 0.009500 & \textbf{1.791648} & 0.368998 & \textbf{2.170146} \\ \hline
+common\_neighbors & -0.000242 & \textbf{1.799350} & 0.122241 & \textbf{1.921349} \\ \hline
+degree\_H & \textbf{0.033249} & \textbf{0.832725} & \textbf{0.706378} & \textbf{1.572353} \\ \hline
+degree\_L & 0.016190 & \textbf{0.794484} & \textbf{0.609749} & \textbf{1.420423} \\ \hline
+eigenCentrality\_H & \textbf{0.018104} & \textbf{0.696613} & \textbf{0.499912} & \textbf{1.214629} \\ \hline
+closeness\_centrality\_H & 0.009479 & 0.248539 & \textbf{0.592475} & 0.850493 \\ \hline
+betweenness\_centrality\_H & 0.009790 & 0.096285 & \textbf{0.511478} & 0.617552 \\ \hline
+clustering\_H & -0.005562 & 0.380655 & 0.229543 & 0.604635 \\ \hline
+eigenCentrality\_L & \textbf{0.030412} & 0.322793 & 0.186595 & 0.539801 \\ \hline
+eccentricity\_L & 0.000281 & 0.101960 & 0.425873 & 0.528114 \\ \hline
+clustering\_L & -0.002117 & 0.297300 & 0.091714 & 0.386897 \\ \hline
+betweenness\_centrality\_L & 0.012696 & 0.147593 & 0.149654 & 0.309943 \\ \hline
+closeness\_centrality\_L & \textbf{0.022215} & 0.017742 & 0.227030 & 0.266988 \\ \hline
+eccentricity\_H & \textbf{0.017172} & 0.016663 & 0.023986 & 0.057821 \\ \hline
+\end{tabular}
+\label{tab:attrModel}
+\end{table}
+
+
+Observando os dados apresentados na Tabela \ref{tab:attrModel} nota-se que no modelo Gnp as contribuições estão pulverizadas em diversos atributos sem destaque para nenhum fator específico. 
+Por outro lado, no modelo Small World tem-se um conjunto bem definido de atributos com destaque, podendo ser citados \textit{short\_path} e \textit{common\_neighbors} com boa contribuição em todas as técnicas de classificação, além dos atributos envolvendo grau \textit{degree\_H} e \textit{degree\_L} e do atributo \textit{eigenCentrality\_H}. 
+Da mesma forma, o modelo Prefferential Attachment apresenta alguns atributos com maior destaque, podendo ser citados principalmente aqueles relacionados ao grau, \textit{degree\_H} e \textit{degree\_L}, mas também os atributos de centralidade, \textit{closeness\_centrality\_H}, \textit{betweenness\_centrality\_H} e \textit{eigencentrality\_H}, que possuem um bom desempenho.
+
+Em uma análise contextualizada, é interessante notar a intersecção dos atributos em destaque e a motivação na construção de cada um dos modelos. Para o GNP, de fato era esperado certa dificuldade  na identificação de algum padrão na rede, dado  caráter aleatório das conexões presentes no grafo, o que se reflete em nenhum atributo possuir um valor de ganho relevante, estando todos abaixo de $0.05$. 
+
+No modelo Small World, os atributos relacionados a identificação de elementos pertencentes ao mesmo cluster se destacam, nominalmente \textit{common\_neighbors} e \textit{short\_path} (que provavelmente identifica a existência de caminhos mais curtos que a média em pares pertencentes ao mesmo cluster), dado que os vértices internos a um mesmo cluster têm, neste modelo, maiores chances de realizar conexões entre si num instante futuro. Por outro lado, o relativo destaque dos atributos envolvendo grau, \textit{degree\_H} e \textit{degree\_L} não é imediatamente explicável dado que o grau atribuído aos vértices se aproxima de uma distribuição normal, mas pode indicar que um número menor de conexões em um vértice é visto como um forte indicativo de ausência de alguma conexão esperada do vértice em questão. Em relação ao atributo \textit{eigenCentrality\_H} a interpretação parece ser semelhante, há uma baixa variação nos valores de centralidade e os nós que, eventualmente, apresentem um número menor de conexões pela ausência de alguma conexão futura esperada, acabam compondo pares de provável conexão.
+
+Para o modelo Prefferential Attachment a identificação do grau é um fator importante, coincidindo com os atributos de maior destaque, \textit{degree\_H} e \textit{degree\_L}. De fato, vértices com maior grau têm um maior número de conexões no modelo, sendo esperado que novas conexões venham a surgir justamente entre estes vértices e os demais, especialmente se estes ``demais'' também apresentarem grau elevado. O mesmo pode ser dito quando se observa a contribuição das medidas de centralidade, \textit{closeness\_centrality\_H}, \textit{betweenness\_centrality\_H} e \textit{eigencentrality\_H}, dado que vértices mais centrais tendem a ser vértices de grau mais elevado neste modelo.
+
+
+Ainda, ao verificar os destaque de cada modelo e comparando-os com a sequência dos atributos de maior ganho na coluna Total, verifica-se uma boa representatividade dos modelos Small World e Prefferential Attachment, tendo os dois melhores atributos de ambos, \textit{common\_neighbors} e \textit{short\_path} para o Small World e \textit{degree\_H} e \textit{degree\_L} para o Prefferential Attachment, fazendo parte dos 5 de maior somatório de ganho. Além destes, o outro atributo que se destaca é o \textit{eigenCentrality\_H}, que se apresenta entre os de maior destaque em todos os três modelos.%, completa o conjunto dos 5 melhores atributos em todos os grafos. %Este conjunto foi denominado Top-5 atributos para classificação...
+
+
+%Ainda, ao verificar os destaque de cada modelo, é possível observar a intersecção dos atributos de maior ganho presente nos experimentos para o Small World e Prefferential Attachment, tendo estes trocando com os dois melhores atributos de ambos, \textit{common\_neighbors} e \textit{short\_path} e \textit{degree\_H} e \textit{degree\_L}, fazendo parte dos 5 de maior somatório de ganho. Além destes, o atributo \textit{eigenCentrality\_H}, que se apresenta entre os 5 de maior destaque nos três modelos, completa o conjunto dos 5 melhores atributos em todos os grafos. %Este conjunto foi denominado Top-5 atributos para classificação...
+
+
+%Um outro ponto relevante a ser comentado, claro que a escolha do mesmo número de elementos em ambas as classes pode fazer com que a participação de alguns atributos apareça de forma exagerada, especialmente no modelo Prefferential Attachment, onde pares de nós com elementos de mais alto grau aparecem com muito mais frequência no conjunto de pares conectados do que no grafo como um todo, o que pode gerar um modelo que trabalha com a falsa premissa de que a existência de um nó de maior grau garante a existência de conexão. Mas, 
+
+%Verificando o modelo Gnp, repara-se que as contribuições estão pulverizadas em diversos atributos, mas com o atributo betweenness\_centrality\_H com um pequeno destaque no grafo criado via modelo Gnp.
+%No modelo Small World repara-se que o atributo common\_neighbors tem uma contribuição de destaque em todas as técnicas de classificação, sendo talvez o único que tenha participação digna de nota.
+%Para o modelo Prefferential Attachment (Tabela \ref{tab:gainPA}), o atributo que possui um maior destaque é o closeness\_centrality\_H, mas não tendo um destaque uniforme em todas as técnicas, com a contribuição muito pulverizada entre os demais atributos.
+%Pode-se observar nesse aspecto os atributos common\_neighbors, betweenness\_centrality\_H, clustering\_H e closeness\_centrality\_H com algum destaque, tendo os demais, de fato, pouco valor na maior parte dos testes apresentados.
+
+Em um segundo experimento, foi verificada a acurácia da tarefa de classificação em cada uma das técnicas de aprendizado, considerando todos os atributos, apenas os 5 melhores identificados em cada grafo (denominado Top-5 do grafo) e os 5 melhores verificados no somatório dos três modelos (denominado Top-5 gerais). Novamente a avaliação foi feita através de validação cruzada via modelo 5-fold.
+
+As Tabelas \ref{tab:accallattr}, \ref{tab:acctopgraph} e \ref{tab:acctopall} apresentam a acurácia obtida na tarefa de classificação ao se utilizar cada uma das técnicas de aprendizado, com respectivamente todos os atributos, apenas os Top-5 do grafo e os Top-5 gerais. 
+
+
+\begin{table}[htbp]
+\caption{Acurácia do processo de classificação utilizando todos os atributos}
+\center
+\begin{tabular}{|l|r|r|r|}
+\hline 
+Classificadores & \multicolumn{1}{l|}{Gnp (\%)} & \multicolumn{1}{l|}{Small World (\%)} & \multicolumn{1}{l|}{Preferential Attachment (\%)} \\ \hline \hline
+SVM & 50.54 & 95.14 & 64.52 \\ \hline
+Naive Bayes & 50.90 & 94.90 & 61.34 \\ \hline
+Árvore de Decisão & 50.30 & 95.12 & 70.50 \\ \hline
+Random Forest & 50.80 & 95.12 & 69.92 \\ \hline
+\end{tabular}
+\label{tab:accallattr}
+\end{table}
+
+
+
+\begin{table}[htbp]
+\caption{Acurácia do processo de classificação utilizando os melhores atributos identificados para o grafo}
+\center
+\begin{tabular}{|l|r|r|r|}
+\hline
+Classificadores & \multicolumn{1}{l|}{Gnp (\%)} & \multicolumn{1}{l|}{Small World (\%)} & \multicolumn{1}{l|}{Preferential Attachment (\%)} \\ \hline \hline
+SVM & 50.92 & 94.98 & 65.84 \\ \hline
+Naive Bayes & 51.50 & 94.94 & 60.94 \\ \hline
+Árvore de Decisão & 50.54 & 95.12 & 72.02 \\ \hline
+Random Forest & 50.70 & 93.52 & 68.54 \\ \hline
+\end{tabular}
+\label{tab:acctopgraph}
+\end{table}
+
+
+
+\begin{table}[!h]
+\caption{Acurácia do processo de classificação utilizando os melhores atributos dentre todos os modelos}
+\center
+\begin{tabular}{|l|r|r|r|}
+\hline
+Classificadores & \multicolumn{1}{l|}{Gnp (\%)} & \multicolumn{1}{l|}{Small World (\%)} & \multicolumn{1}{l|}{Preferential Attachment (\%)} \\ \hline \hline
+SVM & 50.40 & 94.98 & 63.24 \\ \hline
+Naive Bayes & 51.52 & 94.94 & 60.72 \\ \hline
+Árvore de Decisão & 49.78 & 95.12 & 72.08 \\ \hline
+Random Forest & 50.04 & 93.52 & 67.62 \\ \hline
+\end{tabular}
+\label{tab:acctopall}
+\end{table}
+
+\newpage
+
+Analisando as tabelas anteriores, é interessante notar que a utilização de subconjuntos de atributos, tanto relacionados aos melhores para o grafo, quanto melhores em geral, não diminuiu em grande medida a acurácia do processo de classificação, o que vai de encontro ao objetivo proposto neste trabalho. Além disto, a qualidade na tarefa de classificação para cada um dos grafos se apresenta em linha com o que poderia ser previsto: para o GNP, o desempenho não é melhor ao de um \textit{random guest} dado a falta de padrão nas conexões do grafo; no Small World, a qualidade de classificação é alta (superior a $90\%$), o que é esperado até certo ponto dado as características do modelo com as conexões padronizadas, mas que também, muito provavelmente, se deve ao procedimento de construção do grafo, originado de uma látice regular; e no modelo Prefferential Attachment o desempenho é regular, atingindo até $70\%$, o que corrobora com a premissa do grafo apresentar certa estrutura, apesar do caráter aleatório no processo de estabelecimento das conexões.
+
+Em relação ao desempenho das técnicas, não era objetivo verificar qual delas tem um melhor desempenho para o problema. Apesar disso, é interessante notar que a Árvore de Decisão, teoricamente o algoritmo mais simples, foi o que apresentou a melhor qualidade no processo de classificação. Uma hipótese para o ocorrido é que, sendo a Árvore de Decisão uma técnica mais simples, esta pode ser menos sensível a uma má escolha de parâmetros quando comparada aos demais algoritmos de aprendizado, o que a faria possuir certa vantagem na utilização dos parâmetros padrão da ferramenta.
+
+\vspace{0.3cm}
+\subsection{Acurácia da classificação em grafos reais}
+\vspace{0.3cm}
+
+Em outra sequência de experimentos, visando validar os resultados anteriores, foi repetida a análise em grafos vindos de aplicações reais. Neste sentido, foram utilizados o grafo \textit{newmovies} \cite{Tang09}, relativo a um conjunto de filmes conectados pela participação de atores em comum, e o grafo \textit{coauthor} \cite{Wang11}, relativo a um conjunto de autores conectados pelos relações de coautoria em diferentes artigos. 
+%
+Ambos os grafos são desconexos, tendo a base \textit{newmovies} com $26.851$ vértices e $122.195$ arestas e a base \textit{coauthor} com $39.532$ vértices $117.801$ arestas. Ainda, verificando as características topológicas pode-se observar em ambos uma intersecção das características dos modelos Prefferential Attachment e Small World, com a distribuição de grau seguindo uma lei de potência e o valor de \textit{smallworldness} elevado (\textit{newmovies} com valor $1800$ e \textit{coauthor} com valor $3800$).
+
+Seguindo o mesmo procedimento, foi feita inicialmente a verificação do ganho de cada atributo no processo de classificação destes grafos, de forma a se construir um Top-5. Como resultado, os 5 melhores atributos obtidos para o grafo \textit{newmovies} foram: \textit{degree\_H}, \textit{closeness\_centrality \_H}, \textit{common\_neighbors}, \textit{degree\_L} e \textit{closeness\_centrality\_L}, enquanto para a base \textit{coauthor} identifi cou-se os atributos: \textit{common\_neighbors}, \textit{short\_path}, \textit{closeness\_centrality\_L}, \textit{degree\_H} e \textit{degree\_L}, com ambas as listagens ordenados pelo ganho.
+
+É interessante notar a sobreposição entre os Top-5 atributos destes grafos e o Top-5 geral determinado anteriormente, tendo o grafo \textit{newmovies} uma similaridade via coeficiente de Jaccard de valor $0.43$ ($J=\frac{|A \cap B|}{|A \cup B|}$) com seu Top-5 e o grafo \textit{coauthor} similaridade de $0.66$. Ainda, tendo em vista as características observadas nos grafos tem-se os atributos encontrados em linha com o que poderia ser esperado, aparecendo em ambos os grafos as métricas envolvendo grau, fator em destaque no modelo Prefferential Attachment, e o atributo \textit{common\_neighbors}, um dos destaques no modelo Small World.
+
+
+%no grafo \textit{coauthor} (com o maior valor de \textit{smallworldness}), os atributos \textit{common\_neighbors} e \textit{short\_path} como principais destaques, da mesma forma que no modelo Small World.
+
+
+As Tabelas \ref{tab:acctopallattrreal}, \ref{tab:acctopgraphreal} e \ref{tab:acctopallreal} apresentam a acurácia obtida na tarefa de classificação ao se utilizar cada uma das técnicas de aprendizado, com respectivamente todos os atributos, apenas o Top-5 do grafo em questão e o Top-5 geral identificado anteriormente. 
+
+\begin{table}[htbp]
+\caption{Acurácia do processo de classificação utilizando todos os atributos - Grafos de aplicações reais}
+\center
+\begin{tabular}{|l|r|r|}
+\hline
+Classificadores & \multicolumn{1}{l|}{\textit{newmovies} (\%)} & \multicolumn{1}{l|}{\textit{coauthor} (\%)} \\ \hline \hline
+SVM & 79.54 & 97.08 \\ \hline
+Naive Bayes & 72.04 & 90.11 \\ \hline
+Árvore de Decisão & 83.72 & 98.64 \\ \hline
+Random Forest & 84.56 & 98.79 \\ \hline
+\end{tabular}
+\label{tab:acctopallattrreal}
+\end{table}
+
+
+\begin{table}[htbp]
+\caption{Acurácia do processo de classificação utilizando os melhores atributos identificados para o grafo - Grafos de aplicações reais}
+\center
+\begin{tabular}{|l|r|r|}
+\hline
+Classificadores & \multicolumn{1}{l|}{\textit{newmovies} (\%)} & \multicolumn{1}{l|}{\textit{coauthor} (\%)} \\ \hline \hline
+SVM & 79.60 & 95.71 \\ \hline
+Naive Bayes & 79.68 & 96.37 \\ \hline
+Árvore de Decisão & 80.80 & 98.58 \\ \hline
+Random Forest & 79.53 & 98.54 \\ \hline
+\end{tabular}
+\label{tab:acctopgraphreal}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Acurácia do processo de classificação utilizando os melhores atributos dentre todos os modelos - Grafos de aplicações reais}
+\center
+\begin{tabular}{|l|r|r|}
+\hline
+Classificadores & \multicolumn{1}{l|}{\textit{newmovies} (\%)} & \multicolumn{1}{l|}{\textit{coauthor} (\%)} \\ \hline
+SVM & 79.39 & 94.78 \\ \hline
+Naive Bayes & 79.02 & 97.29 \\ \hline
+Árvore de Decisão & 84.05 & 98.66 \\ \hline
+Random Forest & 80.82 & 98.57 \\ \hline
+\end{tabular}
+\label{tab:acctopallreal}
+\end{table}
+
+Verificando o desempenho obtido, tem-se um cenário semelhante ao encontrado nos experimentos anteriores, sem grande perda na qualidade de classificação quando se utiliza apenas os subconjuntos de atributos (Top-5 do grafo e Top-5 geral).%, tendo, nestes experimentos, o próprio desempenho das técnicas com valores semelhantes de qualidade. 
+\newpage
+
+Em relação a percentual de acertos, pode-se considerar um número relativamente alto, especialmente na base \textit{coauthor}, o que é razoável considerando que as conexões em aplicações reais são muito mais regulares do que poderia ser encontrado em modelos de conexões aleatórios, se aproximando do conceito apresentado do Small World, o que inclusive se reflete no índice \textit{smallworldness} verificado.%além das características destes grafos estarem na intersecção dos princípios apresentados nos modelos Small World e Prefferential Attachment.
+
+
+
+\vspace{0.5cm}
+
+\section{Conclusão e Trabalhos Futuros}
+
+\vspace{0.5cm}
+
+Ao longo deste trabalho foi apresentada uma análise de algumas métricas topológicas básicas de grafos, quando aplicadas ao problema de predição de \textit{links} via técnicas de aprendizados supervisionado.
+
+Neste sentido, através de uma metodologia de avaliação de desempenho destas métricas e considerando um grupo de algoritmos de aprendizado, foi possível estabelecer um subconjunto de atributos suficientemente significativo (denominado Top-5 geral) capaz de manter a capacidade de predição quando comparado à classificação utilizando o conjunto total de atributos, com testes realizados em diferentes tipos de grafos.
+
+
+Como análise adicional, foi possível observar nos grafos artificiais as intersecções entre os fatores motivadores de criação de cada modelo e os atributos identificados com maior contribuição na tarefa de classificação, o que corrobora a analise apresentada. 
+%
+Ainda, como poderia ser esperado, foi notado que os padrões de conexão dos grafos têm forte papel na qualidade de classificação que será obtida, tendo para uma geração completamente aleatória, por exemplo, capacidade mínima de predição das novas conexões.
+
+A análise ainda foi corroborada pelo experimento realizado em grafos reais, tendo a classificação bom desempenho no subconjunto de atributos definido se aproximando do obtido com a utilização de todos os atributos. Ainda, foi observado que os atributos de maior destaque nestes grafos se assemelham ao Top-5 geral, o que reforça a escolha de tais atributos.
+
+
+Como trabalhos futuros, uma possibilidade é a analise de outros métricas desenvolvidas especificamente para a predição de \textit{links}, verificando o ganho na classificação que estas eventualmente possam proporcionar. Outra possibilidade é verificar se tais observações se mantêm em grafos que tenham, de fato, comportamento variante no tempo, permitindo, inclusive, validar a aproximação realizada via grafos estáticos. %Outra possibilidade é a verificação do impacto  da adição de informações provenientes do domínio de aplicação, comparando à escolha  apenas de medidas topológicas.
+
+\vspace{0.5cm}
+
+
+
+
+\begin{thebibliography}{99}
+
+\vspace{0.5cm}
+
+	 \bibitem{Mohammad06}
+	Al Hasan, M., Chaoji, V., Salem, S., Zaki, M. (2006). 
+	\newblock{Link prediction using supervised learning. \em In Proc. of SDM 06 workshop on Link Analysis, Counterterrorism and Security.}
+
+	 \bibitem{Benchettara10}
+	Benchettara, N., Kanawati, R., Rouveirol, C. (2010). 
+	\newblock{Supervised machine learning applied to link prediction in bipartite social networks. \em Proceedings - 2010 International Conference on Advances in Social Network Analysis and Mining, ASONAM 2010}
+
+	 \bibitem{Cukierski11}	
+Cukierski, W., Hamner, B., Yang, B. (2011). 
+\newblock{Graph-based features for supervised link prediction. \em Proceedings of the International Joint Conference on Neural Networks}
+
+ \bibitem{Humphries08}
+		Humphries M. D., Gurney K. (2008).
+		\newblock{Network “Small-World-Ness”: A Quantitative Method for Determining Canonical Network Equivalence. \em Sporns O, ed. PLoS ONE}
+
+	 \bibitem{Martinez16}
+	Martinez, V., Berzal, F., Cubero, J. (2016). 
+	\newblock{A Survey of Link Prediction in Complex Networks. \em ACM Computing Surveys}
+	
+	\bibitem{Sa11}
+de Sa, H. R., Prudencio, R. B. C. (2011). 
+\newblock{Supervised link prediction in weighted networks. \em In The 2011 International Joint Conference on Neural Networks}
+
+		 \bibitem{Tang09}
+		Tang, J., Sun, J., Wang, C., Yang, Z. (2009). 
+		\newblock{Social Influence Analysis in Large-scale Networks. \em In Proceedings of the Fifteenth ACM SIGKDD International Conference on Knowledge Discovery and Data Mining }
+
+	\bibitem{Wang11}
+		Wang, L., Lou, T., Tang, J., Hopcroft, J. (2011). 
+		\newblock{Detecting Community Kernels in Large Social Networks. \em  Proceedings of 2011 IEEE International Conference on Data Mining.}
+
+
+	 \bibitem{Witten05}
+		Witten, I. H., Frank, E. (2005). 
+		\newblock{Data Mining: Practical Machine Learning Tools and Techniques. \em San Francisco, CA, USA: Morgan Kaufmann Publishers Inc}
+		
+\end{thebibliography}
+
+
+
+%\vspace{-0.3%m}
+
+\newpage
+\section*{Apêndice}
+%\vspace{0.5cm}
+
+As Tabelas \ref{tab:gainGnp}, \ref{tab:gainSW} e \ref{tab:gainPA} contém o resultado integral dos experimentos nos grafos relativos aos modelos GNP, Small World e Prefferential Attachment, respectivamente, discriminados pelo ganho apresentado em cada uma das técnicas de aprendizagem de máquina. Estes mesmos dados podem ser vistos para os grafos de aplicações reais \textit{newmovies} e \textit{coauthor} nas Tabelas \ref{tab:gainnewmovies} e \ref{tab:gaincoauthor}.
+
+\begin{table}[htbp]
+\caption{Ganho na classificação por atributo: Modelo Gnp}
+\center
+\begin{tabular}{|l|r|l|r|}
+\hline
+\multicolumn{ 2}{|c|}{SVM} & \multicolumn{ 2}{c|}{Naive Bayes} \\ \hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+closeness\_centrality\_H & 0.012490 & closeness\_centrality\_H & 0.012608 \\ \hline
+degree\_H & 0.010891 & closeness\_centrality\_L & 0.009512 \\ \hline
+betweenness\_centrality\_H & 0.009792 & eigenCentrality\_L & 0.009291 \\ \hline
+closeness\_centrality\_L & 0.009492 & degree\_H & 0.008954 \\ \hline
+eigenCentrality\_L & 0.009492 & eigenCentrality\_H & 0.008235 \\ \hline
+short\_path & 0.009093 & betweenness\_centrality\_L & 0.006871 \\ \hline
+eigenCentrality\_H & 0.008193 & degree\_L & 0.005479 \\ \hline
+betweenness\_centrality\_L & 0.006894 & eccentricity\_H & 0.004033 \\ \hline
+degree\_L & 0.006795 & betweenness\_centrality\_H & 0.003130 \\ \hline
+eccentricity\_H & 0.004796 & clustering\_H & -0.000085 \\ \hline
+clustering\_H & 0.001799 & common\_neighbors & -0.000315 \\ \hline
+eccentricity\_L & 0.000000 & clustering\_L & -0.000380 \\ \hline
+clustering\_L & -0.000100 & eccentricity\_L & -0.000719 \\ \hline
+common\_neighbors & -0.000100 & short\_path & -0.001606 \\ \hline \hline
+\multicolumn{ 2}{|c|}{Árvore de decisão} & \multicolumn{ 2}{c|}{Random Forest} \\ \hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+eccentricity\_H & 0.004030 & degree\_H & 0.011981 \\ \hline
+short\_path & 0.001451 & eigenCentrality\_L & 0.011629 \\ \hline
+degree\_H & 0.001423 & eccentricity\_H & 0.004313 \\ \hline
+betweenness\_centrality\_L & 0.000799 & degree\_L & 0.003696 \\ \hline
+degree\_L & 0.000221 & closeness\_centrality\_L & 0.003211 \\ \hline
+clustering\_H & 0.000000 & eigenCentrality\_H & 0.001675 \\ \hline
+clustering\_L & 0.000000 & eccentricity\_L & 0.000999 \\ \hline
+closeness\_centrality\_H & 0.000000 & short\_path & 0.000563 \\ \hline
+closeness\_centrality\_L & 0.000000 & common\_neighbors & 0.000473 \\ \hline
+eccentricity\_L & 0.000000 & clustering\_L & -0.001637 \\ \hline
+eigenCentrality\_H & 0.000000 & betweenness\_centrality\_L & -0.001869 \\ \hline
+eigenCentrality\_L & 0.000000 & betweenness\_centrality\_H & -0.002493 \\ \hline
+common\_neighbors & -0.000300 & clustering\_H & -0.007276 \\ \hline
+betweenness\_centrality\_H & -0.000640 & closeness\_centrality\_H & -0.015619 \\ \hline
+\end{tabular}
+\label{tab:gainGnp}
+\end{table}
+
+
+
+
+\begin{table}[htbp]
+\caption{Ganho na classificação por atributo: Modelo Small World}
+\center
+\begin{tabular}{|l|r|l|r|}
+\hline
+\multicolumn{ 2}{|c|}{SVM} & \multicolumn{ 2}{c|}{Naive Bayes} \\ \hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+common\_neighbors & 0.451200 & common\_neighbors & 0.449608 \\ \hline
+short\_path & 0.446000 & short\_path & 0.447826 \\ \hline
+degree\_L & 0.179800 & degree\_H & 0.233032 \\ \hline
+degree\_H & 0.174840 & eigenCentrality\_H & 0.230362 \\ \hline
+eigenCentrality\_H & 0.163800 & degree\_L & 0.223617 \\ \hline
+eigenCentrality\_L & 0.078500 & eigenCentrality\_L & 0.109183 \\ \hline
+closeness\_centrality\_H & 0.066000 & closeness\_centrality\_H & 0.085119 \\ \hline
+betweenness\_centrality\_L & 0.042100 & betweenness\_centrality\_L & 0.073227 \\ \hline
+betweenness\_centrality\_H & 0.036400 & betweenness\_centrality\_H & 0.047358 \\ \hline
+eccentricity\_L & 0.028200 & clustering\_L & 0.028522 \\ \hline
+closeness\_centrality\_L & 0.012600 & eccentricity\_L & 0.025631 \\ \hline
+clustering\_L & 0.000300 & clustering\_H & 0.023449 \\ \hline
+eccentricity\_H & -0.002200 & closeness\_centrality\_L & 0.015150 \\ \hline
+clustering\_H & -0.002900 & eccentricity\_H & 0.006474 \\ \hline \hline
+\multicolumn{ 2}{|c|}{Árvore de decisão} & \multicolumn{ 2}{c|}{Random Forest} \\ \hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+short\_path & 0.448856 & common\_neighbors & 0.449686 \\ \hline
+common\_neighbors & 0.448856 & short\_path & 0.448967 \\ \hline
+degree\_H & 0.192898 & degree\_H & 0.231955 \\ \hline
+eigenCentrality\_H & 0.175409 & degree\_L & 0.220153 \\ \hline
+degree\_L & 0.170914 & clustering\_H & 0.204237 \\ \hline
+clustering\_H & 0.155869 & clustering\_L & 0.179905 \\ \hline
+clustering\_L & 0.088572 & eigenCentrality\_H & 0.127041 \\ \hline
+eigenCentrality\_L & 0.085624 & eigenCentrality\_L & 0.049486 \\ \hline
+closeness\_centrality\_H & 0.062378 & closeness\_centrality\_H & 0.035042 \\ \hline
+eccentricity\_L & 0.022298 & betweenness\_centrality\_L & 0.029286 \\ \hline
+eccentricity\_H & 0.005185 & eccentricity\_L & 0.025832 \\ \hline
+betweenness\_centrality\_H & 0.004893 & betweenness\_centrality\_H & 0.007634 \\ \hline
+betweenness\_centrality\_L & 0.002980 & eccentricity\_H & 0.007204 \\ \hline
+closeness\_centrality\_L & 0.000000 & closeness\_centrality\_L & -0.010008 \\ \hline
+\end{tabular}
+\label{tab:gainSW}
+\end{table}
+
+
+
+\begin{table}[htbp]
+\caption{Ganho na classificação por atributo: Modelo Prefferential Attachment}
+\center
+\begin{tabular}{|l|r|l|r|}
+\hline
+\multicolumn{2}{|c|}{SVM} & \multicolumn{2}{c|}{Naive Bayes} \\ \hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+closeness\_centrality\_H & 0.141915 & degree\_L & 0.186785 \\ \hline
+degree\_H & 0.126841 & degree\_H & 0.174572 \\ \hline
+eccentricity\_L & 0.112036 & closeness\_centrality\_H & 0.173927 \\ \hline
+eigenCentrality\_H & 0.098333 & eigenCentrality\_H & 0.141664 \\ \hline
+short\_path & 0.092972 & betweenness\_centrality\_H & 0.129032 \\ \hline
+betweenness\_centrality\_H & 0.070726 & eccentricity\_L & 0.104558 \\ \hline
+closeness\_centrality\_L & 0.057182 & short\_path & 0.096761 \\ \hline
+eigenCentrality\_L & 0.031807 & closeness\_centrality\_L & 0.079197 \\ \hline
+degree\_L & 0.028510 & eigenCentrality\_L & 0.077881 \\ \hline
+common\_neighbors & 0.027567 & betweenness\_centrality\_L & 0.074862 \\ \hline
+betweenness\_centrality\_L & 0.005502 & common\_neighbors & 0.032371 \\ \hline
+clustering\_L & -0.000280 & clustering\_L & 0.017898 \\ \hline
+eccentricity\_H & -0.007692 & eccentricity\_H & 0.010347 \\ \hline
+clustering\_H & -0.055170 & clustering\_H & -0.016179 \\ \hline  \hline
+\multicolumn{2}{|c|}{Árvore de decisão} & \multicolumn{2}{c|}{Random Forest} \\\hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+degree\_L & 0.186749 & degree\_H & 0.230376 \\ \hline
+degree\_H & 0.174589 & degree\_L & 0.207705 \\ \hline
+betweenness\_centrality\_H & 0.155192 & betweenness\_centrality\_H & 0.156528 \\ \hline
+clustering\_H & 0.147871 & clustering\_H & 0.153020 \\ \hline
+closeness\_centrality\_H & 0.140636 & closeness\_centrality\_H & 0.135996 \\ \hline
+eigenCentrality\_H & 0.134586 & eigenCentrality\_H & 0.125329 \\ \hline
+eccentricity\_L & 0.104774 & eccentricity\_L & 0.104505 \\ \hline
+short\_path & 0.085721 & short\_path & 0.093544 \\ \hline
+closeness\_centrality\_L & 0.059202 & betweenness\_centrality\_L & 0.039908 \\ \hline
+eigenCentrality\_L & 0.055411 & clustering\_L & 0.038126 \\ \hline
+clustering\_L & 0.035970 & common\_neighbors & 0.031461 \\ \hline
+common\_neighbors & 0.030842 & closeness\_centrality\_L & 0.031450 \\ \hline
+betweenness\_centrality\_L & 0.029381 & eigenCentrality\_L & 0.021497 \\ \hline
+eccentricity\_H & 0.009879 & eccentricity\_H & 0.011451 \\ \hline
+\end{tabular}
+\label{tab:gainPA}
+\end{table}
+
+
+\begin{table}[htbp]
+\caption{Ganho na classificação por atributo: Grafo \textit{newmovies}}
+\center
+\begin{tabular}{|l|r|l|r|}
+\hline
+\multicolumn{ 2}{|c|}{SVM} & \multicolumn{ 2}{c|}{Naive Bayes} \\ \hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+closeness\_centrality\_H & 0.210639 & closeness\_centrality\_H & 0.272882 \\ \hline
+common\_neighbors & 0.195853 & closeness\_centrality\_L & 0.261760 \\ \hline
+closeness\_centrality\_L & 0.191981 & degree\_H & 0.243986 \\ \hline
+degree\_L & 0.189718 & common\_neighbors & 0.243893 \\ \hline
+degree\_H & 0.177640 & degree\_L & 0.216327 \\ \hline
+eigenCentrality\_L & 0.152175 & eigenCentrality\_L & 0.208455 \\ \hline
+eigenCentrality\_H & 0.125526 & betweenness\_centrality\_H & 0.194463 \\ \hline
+eccentricity\_H & 0.124239 & eccentricity\_H & 0.190305 \\ \hline
+betweenness\_centrality\_L & 0.088679 & clustering\_L & 0.181371 \\ \hline
+eccentricity\_L & 0.085303 & betweenness\_centrality\_L & 0.164818 \\ \hline
+clustering\_H & 0.071682 & clustering\_H & 0.153285 \\ \hline
+betweenness\_centrality\_H & 0.018160 & eigenCentrality\_H & 0.131151 \\ \hline
+short\_path & 0.016817 & short\_path & 0.016256 \\ \hline
+clustering\_L & -0.068597 & eccentricity\_L & 0.009592 \\ \hline \hline
+\multicolumn{ 2}{|c|}{Árvore de decisão} & \multicolumn{ 2}{c|}{Random Forest} \\ \hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+short\_path & 0.330821 & short\_path & 0.385669 \\ \hline
+degree\_H & 0.256562 & degree\_H & 0.318779 \\ \hline
+common\_neighbors & 0.240937 & degree\_L & 0.277695 \\ \hline
+eigenCentrality\_H & 0.237087 & common\_neighbors & 0.242344 \\ \hline
+closeness\_centrality\_H & 0.232946 & betweenness\_centrality\_H & 0.231363 \\ \hline
+clustering\_L & 0.226616 & clustering\_L & 0.230577 \\ \hline
+degree\_L & 0.223038 & closeness\_centrality\_H & 0.226603 \\ \hline
+closeness\_centrality\_L & 0.202841 & eigenCentrality\_H & 0.218933 \\ \hline
+clustering\_H & 0.191306 & clustering\_H & 0.210598 \\ \hline
+eccentricity\_L & 0.173168 & eigenCentrality\_L & 0.195458 \\ \hline
+betweenness\_centrality\_H & 0.143945 & eccentricity\_H & 0.193035 \\ \hline
+eigenCentrality\_L & 0.133190 & closeness\_centrality\_L & 0.192616 \\ \hline
+eccentricity\_H & 0.131841 & eccentricity\_L & 0.183290 \\ \hline
+betweenness\_centrality\_L & 0.028327 & betweenness\_centrality\_L & 0.177400 \\ \hline
+\end{tabular}
+\label{tab:gainnewmovies}
+\end{table}
+
+
+
+\begin{table}[htbp]
+\caption{Ganho na classificação por atributo: Grafo \textit{coauthor}}
+\center
+\begin{tabular}{|l|r|l|r|}
+\hline
+\multicolumn{ 2}{|c|}{SVM} & \multicolumn{ 2}{c|}{Naive Bayes} \\ \hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+common\_neighbors & 0.484243 & common\_neighbors & 0.484514 \\ \hline
+short\_path & 0.206661 & closeness\_centrality\_L & 0.246237 \\ \hline
+degree\_H & 0.171019 & degree\_H & 0.217892 \\ \hline
+degree\_L & 0.170872 & degree\_L & 0.210638 \\ \hline
+eccentricity\_L & 0.149058 & short\_path & 0.206722 \\ \hline
+closeness\_centrality\_L & 0.148760 & clustering\_H & 0.156544 \\ \hline
+clustering\_H & 0.116346 & betweenness\_centrality\_H & 0.154756 \\ \hline
+betweenness\_centrality\_H & 0.090306 & closeness\_centrality\_H & 0.148496 \\ \hline
+clustering\_L & 0.043471 & eccentricity\_L & 0.131260 \\ \hline
+eccentricity\_H & 0.031139 & clustering\_L & 0.122893 \\ \hline
+betweenness\_centrality\_L & 0.013691 & eccentricity\_H & 0.102408 \\ \hline
+eigenCentrality\_L & 0.003865 & betweenness\_centrality\_L & 0.095905 \\ \hline
+eigenCentrality\_H & 0.002750 & eigenCentrality\_L & 0.002959 \\ \hline
+closeness\_centrality\_H & -0.030512 & eigenCentrality\_H & 0.001730 \\ \hline \hline
+\multicolumn{ 2}{|c|}{Árvore de decisão} & \multicolumn{ 2}{c|}{Random Forest} \\ \hline
+\multicolumn{1}{|c|}{Atributo} & \multicolumn{1}{c|}{Ganho} & \multicolumn{1}{c|}{Atributo} & \multicolumn{1}{c|}{Ganho} \\ \hline
+short\_path & 0.485821 & short\_path & 0.491786 \\ \hline
+common\_neighbors & 0.483355 & common\_neighbors & 0.483339 \\ \hline
+closeness\_centrality\_L & 0.219178 & degree\_H & 0.235618 \\ \hline
+clustering\_L & 0.199306 & degree\_L & 0.228272 \\ \hline
+degree\_H & 0.186917 & closeness\_centrality\_L & 0.223492 \\ \hline
+degree\_L & 0.176426 & eccentricity\_L & 0.216982 \\ \hline
+clustering\_H & 0.149710 & clustering\_L & 0.194938 \\ \hline
+eccentricity\_L & 0.145511 & betweenness\_centrality\_H & 0.163890 \\ \hline
+closeness\_centrality\_H & 0.140661 & clustering\_H & 0.163803 \\ \hline
+eccentricity\_H & 0.120889 & closeness\_centrality\_H & 0.157266 \\ \hline
+betweenness\_centrality\_H & 0.088434 & betweenness\_centrality\_L & 0.147460 \\ \hline
+betweenness\_centrality\_L & 0.020614 & eccentricity\_H & 0.144746 \\ \hline
+eigenCentrality\_L & 0.002959 & eigenCentrality\_L & 0.135167 \\ \hline
+eigenCentrality\_H & 0.001524 & eigenCentrality\_H & 0.108922 \\ \hline
+\end{tabular}
+\label{tab:gaincoauthor}
+\end{table}
+
+
+
+\end{document}
+
