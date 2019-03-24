@@ -1,0 +1,367 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
+Relation:     grafo
+Instances:    4997
+Attributes:   15
+              degree_H
+              degree_L
+              short_path
+              clustering_H
+              clustering_L
+              betweenness_centrality_H
+              betweenness_centrality_L
+              closeness_centrality_H
+              closeness_centrality_L
+              eccentricity_H
+              eccentricity_L
+              eigenCentrality_H
+              eigenCentrality_L
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+degree_H <= 23
+|   degree_L <= 4
+|   |   degree_H <= 10
+|   |   |   degree_H <= 6
+|   |   |   |   clustering_H <= 0.083333
+|   |   |   |   |   short_path <= 4
+|   |   |   |   |   |   clustering_H <= 0.033333
+|   |   |   |   |   |   |   degree_H <= 4
+|   |   |   |   |   |   |   |   degree_L <= 3: False (2.0)
+|   |   |   |   |   |   |   |   degree_L > 3
+|   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000036: True (12.0/3.0)
+|   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000036
+|   |   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.279739: False (2.0)
+|   |   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.279739: True (4.0/1.0)
+|   |   |   |   |   |   |   degree_H > 4
+|   |   |   |   |   |   |   |   degree_L <= 3
+|   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000023: False (6.0/1.0)
+|   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000023
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000065
+|   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.000027: True (12.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L > 0.000027: False (3.0/1.0)
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000065: False (3.0)
+|   |   |   |   |   |   |   |   degree_L > 3
+|   |   |   |   |   |   |   |   |   eccentricity_H <= 5
+|   |   |   |   |   |   |   |   |   |   degree_H <= 5
+|   |   |   |   |   |   |   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.00004
+|   |   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_L <= 0.253524: False (2.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_L > 0.253524: True (2.0)
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.00004: False (14.0/5.0)
+|   |   |   |   |   |   |   |   |   |   |   short_path > 3
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.000038
+|   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000059
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.270163: False (33.0/9.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.270163: True (15.0/4.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000059: False (5.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L > 0.000038: True (3.0)
+|   |   |   |   |   |   |   |   |   |   degree_H > 5
+|   |   |   |   |   |   |   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   |   |   |   |   |   |   short_path <= 2: False (2.0)
+|   |   |   |   |   |   |   |   |   |   |   |   short_path > 2
+|   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000079: True (8.0/2.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000079: False (2.0)
+|   |   |   |   |   |   |   |   |   |   |   short_path > 3: False (58.0/26.0)
+|   |   |   |   |   |   |   |   |   eccentricity_H > 5
+|   |   |   |   |   |   |   |   |   |   short_path <= 3: False (4.0/1.0)
+|   |   |   |   |   |   |   |   |   |   short_path > 3
+|   |   |   |   |   |   |   |   |   |   |   degree_H <= 5
+|   |   |   |   |   |   |   |   |   |   |   |   eigenCentrality_H <= 0.002812
+|   |   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.24523: False (2.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.24523: True (8.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   eigenCentrality_H > 0.002812: False (7.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   degree_H > 5: False (9.0/2.0)
+|   |   |   |   |   |   clustering_H > 0.033333
+|   |   |   |   |   |   |   closeness_centrality_H <= 0.274887: False (3.0/1.0)
+|   |   |   |   |   |   |   closeness_centrality_H > 0.274887: True (10.0/2.0)
+|   |   |   |   |   short_path > 4
+|   |   |   |   |   |   degree_H <= 5
+|   |   |   |   |   |   |   eccentricity_H <= 5
+|   |   |   |   |   |   |   |   closeness_centrality_H <= 0.250181: True (2.0)
+|   |   |   |   |   |   |   |   closeness_centrality_H > 0.250181: False (10.0/2.0)
+|   |   |   |   |   |   |   eccentricity_H > 5: True (25.0/8.0)
+|   |   |   |   |   |   degree_H > 5
+|   |   |   |   |   |   |   betweenness_centrality_H <= 0.000046: True (17.0/4.0)
+|   |   |   |   |   |   |   betweenness_centrality_H > 0.000046: False (4.0/1.0)
+|   |   |   |   clustering_H > 0.083333: False (33.0/9.0)
+|   |   |   degree_H > 6
+|   |   |   |   degree_L <= 3: True (55.0/9.0)
+|   |   |   |   degree_L > 3
+|   |   |   |   |   eccentricity_H <= 5
+|   |   |   |   |   |   clustering_H <= 0.025
+|   |   |   |   |   |   |   betweenness_centrality_H <= 0.000178: True (142.0/54.0)
+|   |   |   |   |   |   |   betweenness_centrality_H > 0.000178
+|   |   |   |   |   |   |   |   closeness_centrality_H <= 0.2954
+|   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000193: False (5.0)
+|   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000193: True (10.0/1.0)
+|   |   |   |   |   |   |   |   closeness_centrality_H > 0.2954: False (4.0)
+|   |   |   |   |   |   clustering_H > 0.025: True (47.0/11.0)
+|   |   |   |   |   eccentricity_H > 5
+|   |   |   |   |   |   short_path <= 4
+|   |   |   |   |   |   |   betweenness_centrality_H <= 0.000196: True (34.0/10.0)
+|   |   |   |   |   |   |   betweenness_centrality_H > 0.000196: False (2.0)
+|   |   |   |   |   |   short_path > 4: False (6.0/1.0)
+|   |   degree_H > 10
+|   |   |   degree_L <= 3
+|   |   |   |   degree_H <= 13: True (16.0)
+|   |   |   |   degree_H > 13
+|   |   |   |   |   closeness_centrality_H <= 0.273115: False (3.0)
+|   |   |   |   |   closeness_centrality_H > 0.273115: True (18.0/1.0)
+|   |   |   degree_L > 3
+|   |   |   |   short_path <= 3
+|   |   |   |   |   closeness_centrality_L <= 0.247322: False (4.0)
+|   |   |   |   |   closeness_centrality_L > 0.247322
+|   |   |   |   |   |   degree_H <= 20: True (56.0/3.0)
+|   |   |   |   |   |   degree_H > 20
+|   |   |   |   |   |   |   clustering_H <= 0.001894: True (4.0)
+|   |   |   |   |   |   |   clustering_H > 0.001894
+|   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.001067: False (3.0)
+|   |   |   |   |   |   |   |   betweenness_centrality_H > 0.001067: True (2.0)
+|   |   |   |   short_path > 3: True (180.0/30.0)
+|   degree_L > 4
+|   |   degree_H <= 9: False (1427.0/284.0)
+|   |   degree_H > 9
+|   |   |   degree_H <= 15
+|   |   |   |   degree_L <= 7
+|   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   short_path <= 2
+|   |   |   |   |   |   |   betweenness_centrality_H <= 0.000191: False (6.0)
+|   |   |   |   |   |   |   betweenness_centrality_H > 0.000191: True (7.0)
+|   |   |   |   |   |   short_path > 2: False (187.0/52.0)
+|   |   |   |   |   short_path > 3: False (409.0/135.0)
+|   |   |   |   degree_L > 7
+|   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   clustering_L <= 0.006349
+|   |   |   |   |   |   |   short_path <= 2: False (7.0/1.0)
+|   |   |   |   |   |   |   short_path > 2
+|   |   |   |   |   |   |   |   degree_H <= 14
+|   |   |   |   |   |   |   |   |   degree_H <= 12
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000307
+|   |   |   |   |   |   |   |   |   |   |   degree_L <= 8
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000159: False (6.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000159: True (11.0/4.0)
+|   |   |   |   |   |   |   |   |   |   |   degree_L > 8: False (33.0/8.0)
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000307
+|   |   |   |   |   |   |   |   |   |   |   eccentricity_L <= 4: False (3.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   eccentricity_L > 4: True (8.0/1.0)
+|   |   |   |   |   |   |   |   |   degree_H > 12: True (37.0/14.0)
+|   |   |   |   |   |   |   |   degree_H > 14: False (25.0/7.0)
+|   |   |   |   |   |   clustering_L > 0.006349: False (11.0/1.0)
+|   |   |   |   |   short_path > 3
+|   |   |   |   |   |   clustering_H <= 0.010196: False (104.0/45.0)
+|   |   |   |   |   |   clustering_H > 0.010196
+|   |   |   |   |   |   |   betweenness_centrality_L <= 0.000154: True (47.0/16.0)
+|   |   |   |   |   |   |   betweenness_centrality_L > 0.000154
+|   |   |   |   |   |   |   |   degree_L <= 11: False (4.0)
+|   |   |   |   |   |   |   |   degree_L > 11: True (2.0)
+|   |   |   degree_H > 15
+|   |   |   |   degree_L <= 8
+|   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   short_path <= 2
+|   |   |   |   |   |   |   degree_L <= 5: True (3.0)
+|   |   |   |   |   |   |   degree_L > 5
+|   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.00058: False (5.0/1.0)
+|   |   |   |   |   |   |   |   betweenness_centrality_H > 0.00058: True (3.0)
+|   |   |   |   |   |   short_path > 2
+|   |   |   |   |   |   |   eccentricity_L <= 4
+|   |   |   |   |   |   |   |   degree_L <= 7
+|   |   |   |   |   |   |   |   |   degree_H <= 16: True (2.0)
+|   |   |   |   |   |   |   |   |   degree_H > 16
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.000032: False (5.0/1.0)
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_L > 0.000032
+|   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000987: True (2.0)
+|   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000987: False (2.0)
+|   |   |   |   |   |   |   |   degree_L > 7: True (3.0)
+|   |   |   |   |   |   |   eccentricity_L > 4
+|   |   |   |   |   |   |   |   closeness_centrality_L <= 0.260364: True (35.0/12.0)
+|   |   |   |   |   |   |   |   closeness_centrality_L > 0.260364
+|   |   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.00015
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_L <= 0.002939
+|   |   |   |   |   |   |   |   |   |   |   clustering_H <= 0.013228: False (18.0)
+|   |   |   |   |   |   |   |   |   |   |   clustering_H > 0.013228: True (3.0/1.0)
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_L > 0.002939
+|   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.282171: True (6.0)
+|   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.282171
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.000108
+|   |   |   |   |   |   |   |   |   |   |   |   |   degree_H <= 22: False (32.0/10.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   degree_H > 22: True (5.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L > 0.000108
+|   |   |   |   |   |   |   |   |   |   |   |   |   eigenCentrality_L <= 0.00462: False (6.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   eigenCentrality_L > 0.00462
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.300577: True (3.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.300577: False (4.0/1.0)
+|   |   |   |   |   |   |   |   |   betweenness_centrality_L > 0.00015
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_H <= 0.012671: False (6.0)
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_H > 0.012671: True (3.0)
+|   |   |   |   |   short_path > 3
+|   |   |   |   |   |   eccentricity_H <= 5
+|   |   |   |   |   |   |   betweenness_centrality_H <= 0.000828
+|   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.000111
+|   |   |   |   |   |   |   |   |   degree_L <= 6
+|   |   |   |   |   |   |   |   |   |   degree_L <= 5
+|   |   |   |   |   |   |   |   |   |   |   eigenCentrality_H <= 0.006982
+|   |   |   |   |   |   |   |   |   |   |   |   short_path <= 4
+|   |   |   |   |   |   |   |   |   |   |   |   |   eigenCentrality_L <= 0.000816: True (5.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   eigenCentrality_L > 0.000816
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   degree_H <= 20: True (32.0/11.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   degree_H > 20: False (3.0)
+|   |   |   |   |   |   |   |   |   |   |   |   short_path > 4: False (2.0)
+|   |   |   |   |   |   |   |   |   |   |   eigenCentrality_H > 0.006982
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000776: False (29.0/6.0)
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000776: True (3.0)
+|   |   |   |   |   |   |   |   |   |   degree_L > 5: False (47.0/19.0)
+|   |   |   |   |   |   |   |   |   degree_L > 6
+|   |   |   |   |   |   |   |   |   |   degree_L <= 7: True (29.0/10.0)
+|   |   |   |   |   |   |   |   |   |   degree_L > 7
+|   |   |   |   |   |   |   |   |   |   |   closeness_centrality_L <= 0.261637: False (7.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   closeness_centrality_L > 0.261637: True (6.0/1.0)
+|   |   |   |   |   |   |   |   betweenness_centrality_L > 0.000111
+|   |   |   |   |   |   |   |   |   degree_L <= 6: True (2.0)
+|   |   |   |   |   |   |   |   |   degree_L > 6
+|   |   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.292514: True (5.0/1.0)
+|   |   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.292514: False (2.0)
+|   |   |   |   |   |   |   betweenness_centrality_H > 0.000828: False (12.0/1.0)
+|   |   |   |   |   |   eccentricity_H > 5: True (11.0/2.0)
+|   |   |   |   degree_L > 8
+|   |   |   |   |   clustering_L <= 0.009524
+|   |   |   |   |   |   degree_H <= 18
+|   |   |   |   |   |   |   common_neighbors <= 0
+|   |   |   |   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   |   |   |   closeness_centrality_L <= 0.262724: True (7.0)
+|   |   |   |   |   |   |   |   |   closeness_centrality_L > 0.262724
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.000129: False (4.0)
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_L > 0.000129
+|   |   |   |   |   |   |   |   |   |   |   degree_L <= 9: False (6.0/2.0)
+|   |   |   |   |   |   |   |   |   |   |   degree_L > 9
+|   |   |   |   |   |   |   |   |   |   |   |   clustering_H <= 0.006893
+|   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.000248: False (3.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L > 0.000248: True (4.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   clustering_H > 0.006893: True (17.0)
+|   |   |   |   |   |   |   |   short_path > 3: True (27.0/9.0)
+|   |   |   |   |   |   |   common_neighbors > 0
+|   |   |   |   |   |   |   |   closeness_centrality_H <= 0.298576: True (3.0)
+|   |   |   |   |   |   |   |   closeness_centrality_H > 0.298576: False (3.0)
+|   |   |   |   |   |   degree_H > 18
+|   |   |   |   |   |   |   degree_H <= 21
+|   |   |   |   |   |   |   |   clustering_L <= 0.005004
+|   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.307359
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000606
+|   |   |   |   |   |   |   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_L <= 0.279177: True (4.0)
+|   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_L > 0.279177
+|   |   |   |   |   |   |   |   |   |   |   |   |   short_path <= 2: True (3.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   short_path > 2: False (7.0/2.0)
+|   |   |   |   |   |   |   |   |   |   |   short_path > 3
+|   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.280776: True (4.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.280776: False (12.0/1.0)
+|   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000606: False (8.0)
+|   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.307359: True (4.0)
+|   |   |   |   |   |   |   |   clustering_L > 0.005004: False (4.0)
+|   |   |   |   |   |   |   degree_H > 21
+|   |   |   |   |   |   |   |   clustering_L <= 0.001932
+|   |   |   |   |   |   |   |   |   clustering_H <= 0.008141
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_L <= 0.002334
+|   |   |   |   |   |   |   |   |   |   |   clustering_H <= 0.001894
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.000086: True (2.0)
+|   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L > 0.000086: False (2.0)
+|   |   |   |   |   |   |   |   |   |   |   clustering_H > 0.001894: False (2.0)
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_L > 0.002334: True (14.0/1.0)
+|   |   |   |   |   |   |   |   |   clustering_H > 0.008141: False (3.0)
+|   |   |   |   |   |   |   |   clustering_L > 0.001932: True (2.0)
+|   |   |   |   |   clustering_L > 0.009524: True (9.0)
+degree_H > 23
+|   betweenness_centrality_H <= 0.007435
+|   |   degree_L <= 4: True (170.0/13.0)
+|   |   degree_L > 4
+|   |   |   degree_L <= 13
+|   |   |   |   degree_L <= 5
+|   |   |   |   |   eccentricity_H <= 5
+|   |   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   |   eccentricity_L <= 4
+|   |   |   |   |   |   |   |   eigenCentrality_H <= 0.019448: True (8.0)
+|   |   |   |   |   |   |   |   eigenCentrality_H > 0.019448
+|   |   |   |   |   |   |   |   |   clustering_L <= 0.003077: False (31.0/12.0)
+|   |   |   |   |   |   |   |   |   clustering_L > 0.003077: True (5.0)
+|   |   |   |   |   |   |   eccentricity_L > 4: True (46.0/22.0)
+|   |   |   |   |   |   short_path > 3
+|   |   |   |   |   |   |   closeness_centrality_L <= 0.265747
+|   |   |   |   |   |   |   |   eccentricity_L <= 4
+|   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.323991: False (3.0)
+|   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.323991: True (4.0)
+|   |   |   |   |   |   |   |   eccentricity_L > 4
+|   |   |   |   |   |   |   |   |   closeness_centrality_L <= 0.24544: False (3.0)
+|   |   |   |   |   |   |   |   |   closeness_centrality_L > 0.24544: True (32.0/7.0)
+|   |   |   |   |   |   |   closeness_centrality_L > 0.265747: False (9.0/1.0)
+|   |   |   |   |   eccentricity_H > 5
+|   |   |   |   |   |   closeness_centrality_L <= 0.234658: False (2.0)
+|   |   |   |   |   |   closeness_centrality_L > 0.234658: True (11.0/2.0)
+|   |   |   |   degree_L > 5
+|   |   |   |   |   degree_H <= 29
+|   |   |   |   |   |   common_neighbors <= 0
+|   |   |   |   |   |   |   degree_L <= 9
+|   |   |   |   |   |   |   |   clustering_L <= 0.001282
+|   |   |   |   |   |   |   |   |   eccentricity_L <= 4
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_H <= 0.027506: True (5.0)
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_H > 0.027506: False (3.0/1.0)
+|   |   |   |   |   |   |   |   |   eccentricity_L > 4
+|   |   |   |   |   |   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   |   |   |   |   |   degree_H <= 25: True (9.0/1.0)
+|   |   |   |   |   |   |   |   |   |   |   degree_H > 25
+|   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_L <= 0.261378: True (4.0)
+|   |   |   |   |   |   |   |   |   |   |   |   closeness_centrality_L > 0.261378
+|   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000721: True (2.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000721
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L <= 0.000087: False (8.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_L > 0.000087
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   degree_L <= 7: True (2.0)
+|   |   |   |   |   |   |   |   |   |   |   |   |   |   |   degree_L > 7: False (4.0/1.0)
+|   |   |   |   |   |   |   |   |   |   short_path > 3
+|   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000986: False (28.0/13.0)
+|   |   |   |   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000986: True (6.0)
+|   |   |   |   |   |   |   |   clustering_L > 0.001282: False (8.0/1.0)
+|   |   |   |   |   |   |   degree_L > 9: True (27.0/5.0)
+|   |   |   |   |   |   common_neighbors > 0: False (7.0/1.0)
+|   |   |   |   |   degree_H > 29: True (264.0/56.0)
+|   |   |   degree_L > 13: True (171.0/17.0)
+|   betweenness_centrality_H > 0.007435: True (383.0/21.0)
+
+Number of Leaves  : 	154
+
+Size of the tree : 	307
+
+
+Time taken to build model: 0.16 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        3523               70.5023 %
+Incorrectly Classified Instances      1474               29.4977 %
+Kappa statistic                          0.4101
+Mean absolute error                      0.3636
+Root mean squared error                  0.4584
+Relative absolute error                 72.7277 %
+Root relative squared error             91.6815 %
+Total Number of Instances             4997     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.641    0.231    0.735      0.641    0.685      0.413    0.743     0.724     True
+                 0.769    0.359    0.682      0.769    0.723      0.413    0.743     0.671     False
+Weighted Avg.    0.705    0.295    0.708      0.705    0.704      0.413    0.743     0.697     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 1603  896 |    a = True
+  578 1920 |    b = False
+

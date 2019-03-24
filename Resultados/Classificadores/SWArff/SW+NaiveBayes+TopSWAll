@@ -1,0 +1,81 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.bayes.NaiveBayes 
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R4-11,13
+Instances:    5000
+Attributes:   6
+              degree_H
+              degree_L
+              short_path
+              eigenCentrality_H
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Naive Bayes Classifier
+
+                      Class
+Attribute              True   False
+                      (0.5)   (0.5)
+====================================
+degree_H
+  mean                9.2472 10.1072
+  std. dev.           0.9358  0.9306
+  weight sum            2500    2500
+  precision                1       1
+
+degree_L
+  mean                     8   8.866
+  std. dev.           0.9637  1.0116
+  weight sum            2500    2500
+  precision                1       1
+
+short_path
+  mean                2.4204   6.256
+  std. dev.           1.3241  1.0561
+  weight sum            2500    2500
+  precision                1       1
+
+eigenCentrality_H
+  mean                0.0089  0.0111
+  std. dev.           0.0025  0.0028
+  weight sum            2500    2500
+  precision                0       0
+
+common_neighbors
+  mean                3.9584  0.0024
+  std. dev.           1.9148  0.1667
+  weight sum            2500    2500
+  precision                1       1
+
+
+
+Time taken to build model: 0.01 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        4747               94.94   %
+Incorrectly Classified Instances       253                5.06   %
+Kappa statistic                          0.8988
+Mean absolute error                      0.053 
+Root mean squared error                  0.2226
+Relative absolute error                 10.5995 %
+Root relative squared error             44.5243 %
+Total Number of Instances             5000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.905    0.006    0.993      0.905    0.947      0.902    0.960     0.973     True
+                 0.994    0.095    0.913      0.994    0.952      0.902    0.960     0.933     False
+Weighted Avg.    0.949    0.051    0.953      0.949    0.949      0.902    0.960     0.953     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 2263  237 |    a = True
+   16 2484 |    b = False
+

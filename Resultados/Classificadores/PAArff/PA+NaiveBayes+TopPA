@@ -1,0 +1,81 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.bayes.NaiveBayes 
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R3-5,7,9-11,13-14
+Instances:    4997
+Attributes:   6
+              degree_H
+              degree_L
+              betweenness_centrality_H
+              closeness_centrality_H
+              eigenCentrality_H
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Naive Bayes Classifier
+
+                             Class
+Attribute                     True   False
+                             (0.5)   (0.5)
+===========================================
+degree_H
+  mean                      45.6851 12.8186
+  std. dev.                 71.5307 19.7413
+  weight sum                   2499    2498
+  precision                  4.0187  4.0187
+
+degree_L
+  mean                       8.0802  6.0399
+  std. dev.                 10.6388  3.5068
+  weight sum                   2499    2498
+  precision                  2.6923  2.6923
+
+betweenness_centrality_H
+  mean                       0.0052  0.0005
+  std. dev.                  0.0139  0.0033
+  weight sum                   2499    2498
+  precision                       0       0
+
+closeness_centrality_H
+  mean                        0.304  0.2826
+  std. dev.                  0.0353  0.0194
+  weight sum                   2499    2498
+  precision                  0.0001  0.0001
+
+eigenCentrality_H
+  mean                       0.0272  0.0081
+  std. dev.                   0.051  0.0136
+  weight sum                   2499    2498
+  precision                  0.0001  0.0001
+
+
+
+Time taken to build model: 0.01 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        3045               60.9366 %
+Incorrectly Classified Instances      1952               39.0634 %
+Kappa statistic                          0.2188
+Mean absolute error                      0.3892
+Root mean squared error                  0.6125
+Relative absolute error                 77.8462 %
+Root relative squared error            122.5032 %
+Total Number of Instances             4997     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.250    0.031    0.890      0.250    0.390      0.315    0.709     0.743     True
+                 0.969    0.750    0.564      0.969    0.713      0.315    0.709     0.662     False
+Weighted Avg.    0.609    0.390    0.727      0.609    0.551      0.315    0.709     0.702     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+  624 1875 |    a = True
+   77 2421 |    b = False
+

@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {brazil}
+\beamer@sectionintoc {1}{O Problema de Predi\IeC {\c c}\IeC {\~a}o de Links}{3}{0}{1}
+\beamer@sectionintoc {2}{Aprendizado Supervisionado Aplicado \IeC {\`a} Predi\IeC {\c c}\IeC {\~a}o de Links}{6}{0}{2}
+\beamer@sectionintoc {3}{Experimentos Computacionais}{9}{0}{3}
+\beamer@sectionintoc {4}{Conclus\IeC {\~o}es e trabalhos futuros}{16}{0}{4}
+\beamer@sectionintoc {5}{Refer\^encias}{18}{0}{5}

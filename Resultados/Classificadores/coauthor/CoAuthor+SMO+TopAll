@@ -1,0 +1,65 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007" -calibrator "weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4"
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R4-11,13
+Instances:    13453
+Attributes:   6
+              degree_H
+              degree_L
+              short_path
+              eigenCentrality_H
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+SMO
+
+Kernel used:
+  Linear Kernel: K(x,y) = <x,y>
+
+Classifier for classes: True, False
+
+BinarySMO
+
+Machine linear: showing attribute weights, not support vectors.
+
+        -0.0013 * (normalized) degree_H
+ +       0.0042 * (normalized) degree_L
+ +      -0.0009 * (normalized) short_path
+ +       0.0011 * (normalized) eigenCentrality_H
+ +     -41.0145 * (normalized) common_neighbors
+ +       1.0002
+
+Number of kernel evaluations: 4943082 (59.739% cached)
+
+
+
+Time taken to build model: 1.43 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances       12751               94.7818 %
+Incorrectly Classified Instances       702                5.2182 %
+Kappa statistic                          0.8956
+Mean absolute error                      0.0522
+Root mean squared error                  0.2284
+Relative absolute error                 10.4363 %
+Root relative squared error             45.6866 %
+Total Number of Instances            13453     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.896    0.000    1.000      0.896    0.945      0.900    0.948     0.948     True
+                 1.000    0.104    0.906      1.000    0.950      0.900    0.948     0.906     False
+Weighted Avg.    0.948    0.052    0.953      0.948    0.948      0.900    0.948     0.927     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 6027  700 |    a = True
+    2 6724 |    b = False
+

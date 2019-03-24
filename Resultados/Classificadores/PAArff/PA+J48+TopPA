@@ -1,0 +1,80 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R3-5,7,9-11,13-14
+Instances:    4997
+Attributes:   6
+              degree_H
+              degree_L
+              betweenness_centrality_H
+              closeness_centrality_H
+              eigenCentrality_H
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+degree_H <= 23
+|   degree_L <= 4
+|   |   degree_H <= 6
+|   |   |   degree_L <= 3
+|   |   |   |   betweenness_centrality_H <= 0.000084: True (38.0/14.0)
+|   |   |   |   betweenness_centrality_H > 0.000084: False (4.0)
+|   |   |   degree_L > 3
+|   |   |   |   degree_H <= 4
+|   |   |   |   |   betweenness_centrality_H <= 0.000036: True (17.0/4.0)
+|   |   |   |   |   betweenness_centrality_H > 0.000036
+|   |   |   |   |   |   closeness_centrality_H <= 0.279739: False (2.0)
+|   |   |   |   |   |   closeness_centrality_H > 0.279739
+|   |   |   |   |   |   |   closeness_centrality_H <= 0.281591: True (2.0)
+|   |   |   |   |   |   |   closeness_centrality_H > 0.281591: False (5.0/2.0)
+|   |   |   |   degree_H > 4: False (254.0/111.0)
+|   |   degree_H > 6: True (591.0/145.0)
+|   degree_L > 4
+|   |   degree_H <= 9: False (1427.0/284.0)
+|   |   degree_H > 9
+|   |   |   degree_H <= 15: False (907.0/328.0)
+|   |   |   degree_H > 15
+|   |   |   |   degree_L <= 8: False (341.0/162.0)
+|   |   |   |   degree_L > 8
+|   |   |   |   |   degree_H <= 18: True (77.0/24.0)
+|   |   |   |   |   degree_H > 18
+|   |   |   |   |   |   degree_H <= 22: False (65.0/29.0)
+|   |   |   |   |   |   degree_H > 22: True (12.0/2.0)
+degree_H > 23: True (1255.0/220.0)
+
+Number of Leaves  : 	15
+
+Size of the tree : 	29
+
+
+Time taken to build model: 0.04 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        3599               72.0232 %
+Incorrectly Classified Instances      1398               27.9768 %
+Kappa statistic                          0.4405
+Mean absolute error                      0.375 
+Root mean squared error                  0.4397
+Relative absolute error                 75.0022 %
+Root relative squared error             87.9479 %
+Total Number of Instances             4997     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.661    0.221    0.750      0.661    0.703      0.444    0.767     0.749     True
+                 0.779    0.339    0.697      0.779    0.736      0.444    0.767     0.721     False
+Weighted Avg.    0.720    0.280    0.723      0.720    0.719      0.444    0.767     0.735     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 1652  847 |    a = True
+  551 1947 |    b = False
+

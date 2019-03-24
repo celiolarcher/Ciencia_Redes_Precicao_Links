@@ -1,0 +1,65 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007" -calibrator "weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4"
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R1-2,5,7-9,12-14
+Instances:    5004
+Attributes:   6
+              short_path
+              clustering_H
+              betweenness_centrality_H
+              eccentricity_H
+              eccentricity_L
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+SMO
+
+Kernel used:
+  Linear Kernel: K(x,y) = <x,y>
+
+Classifier for classes: True, False
+
+BinarySMO
+
+Machine linear: showing attribute weights, not support vectors.
+
+        -0.0084 * (normalized) short_path
+ +       0.2778 * (normalized) clustering_H
+ +      -0.0059 * (normalized) betweenness_centrality_H
+ +       0.0039 * (normalized) eccentricity_H
+ +      -0      * (normalized) eccentricity_L
+ +       0.0054
+
+Number of kernel evaluations: 550700 (52.997% cached)
+
+
+
+Time taken to build model: 0.35 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        2528               50.5196 %
+Incorrectly Classified Instances      2476               49.4804 %
+Kappa statistic                          0.0104
+Mean absolute error                      0.4948
+Root mean squared error                  0.7034
+Relative absolute error                 98.9608 %
+Root relative squared error            140.6846 %
+Total Number of Instances             5004     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.633    0.623    0.504      0.633    0.561      0.011    0.505     0.503     True
+                 0.377    0.367    0.507      0.377    0.432      0.011    0.505     0.503     False
+Weighted Avg.    0.505    0.495    0.506      0.505    0.497      0.011    0.505     0.503     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 1585  917 |    a = True
+ 1559  943 |    b = False
+

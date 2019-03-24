@@ -1,0 +1,60 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R2-8,11,14
+Instances:    5004
+Attributes:   6
+              degree_H
+              closeness_centrality_L
+              eccentricity_H
+              eigenCentrality_H
+              eigenCentrality_L
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+eccentricity_H <= 6
+|   degree_H <= 13: False (3763.0/1855.0)
+|   degree_H > 13
+|   |   degree_H <= 17: True (853.0/383.0)
+|   |   degree_H > 17: False (106.0/47.0)
+eccentricity_H > 6
+|   eigenCentrality_L <= 0.005879: False (265.0/116.0)
+|   eigenCentrality_L > 0.005879: True (17.0/3.0)
+
+Number of Leaves  : 	5
+
+Size of the tree : 	9
+
+
+Time taken to build model: 0.02 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        2529               50.5396 %
+Incorrectly Classified Instances      2475               49.4604 %
+Kappa statistic                          0.0108
+Mean absolute error                      0.4997
+Root mean squared error                  0.5005
+Relative absolute error                 99.9438 %
+Root relative squared error            100.0959 %
+Total Number of Instances             5004     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.322    0.311    0.509      0.322    0.394      0.012    0.506     0.505     True
+                 0.689    0.678    0.504      0.689    0.582      0.012    0.506     0.503     False
+Weighted Avg.    0.505    0.495    0.506      0.505    0.488      0.012    0.506     0.504     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+  805 1697 |    a = True
+  778 1724 |    b = False
+

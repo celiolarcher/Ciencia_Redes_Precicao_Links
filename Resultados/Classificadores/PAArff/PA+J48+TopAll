@@ -1,0 +1,100 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R4-11,13
+Instances:    4997
+Attributes:   6
+              degree_H
+              degree_L
+              short_path
+              eigenCentrality_H
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+degree_H <= 23
+|   degree_L <= 4
+|   |   degree_H <= 6
+|   |   |   degree_L <= 3: True (42.0/18.0)
+|   |   |   degree_L > 3
+|   |   |   |   degree_H <= 4: True (26.0/9.0)
+|   |   |   |   degree_H > 4
+|   |   |   |   |   degree_H <= 5: False (141.0/55.0)
+|   |   |   |   |   degree_H > 5
+|   |   |   |   |   |   short_path <= 4
+|   |   |   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   |   |   short_path <= 2: False (2.0)
+|   |   |   |   |   |   |   |   short_path > 2: True (16.0/6.0)
+|   |   |   |   |   |   |   short_path > 3: False (78.0/35.0)
+|   |   |   |   |   |   short_path > 4: True (17.0/6.0)
+|   |   degree_H > 6: True (591.0/145.0)
+|   degree_L > 4
+|   |   degree_H <= 9: False (1427.0/284.0)
+|   |   degree_H > 9
+|   |   |   degree_H <= 15: False (907.0/328.0)
+|   |   |   degree_H > 15
+|   |   |   |   degree_L <= 8
+|   |   |   |   |   short_path <= 3
+|   |   |   |   |   |   short_path <= 2: True (11.0/4.0)
+|   |   |   |   |   |   short_path > 2
+|   |   |   |   |   |   |   degree_L <= 7
+|   |   |   |   |   |   |   |   degree_L <= 6
+|   |   |   |   |   |   |   |   |   degree_L <= 5: False (57.0/26.0)
+|   |   |   |   |   |   |   |   |   degree_L > 5
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_H <= 0.006496: True (4.0)
+|   |   |   |   |   |   |   |   |   |   eigenCentrality_H > 0.006496
+|   |   |   |   |   |   |   |   |   |   |   degree_H <= 16: True (2.0)
+|   |   |   |   |   |   |   |   |   |   |   degree_H > 16: False (20.0/6.0)
+|   |   |   |   |   |   |   |   degree_L > 6: False (36.0/12.0)
+|   |   |   |   |   |   |   degree_L > 7: True (16.0/6.0)
+|   |   |   |   |   short_path > 3: False (195.0/95.0)
+|   |   |   |   degree_L > 8
+|   |   |   |   |   common_neighbors <= 0
+|   |   |   |   |   |   short_path <= 3: True (85.0/29.0)
+|   |   |   |   |   |   short_path > 3
+|   |   |   |   |   |   |   degree_H <= 18: True (28.0/9.0)
+|   |   |   |   |   |   |   degree_H > 18
+|   |   |   |   |   |   |   |   degree_H <= 22: False (24.0/7.0)
+|   |   |   |   |   |   |   |   degree_H > 22: True (6.0/1.0)
+|   |   |   |   |   common_neighbors > 0
+|   |   |   |   |   |   eigenCentrality_H <= 0.010618: True (6.0/1.0)
+|   |   |   |   |   |   eigenCentrality_H > 0.010618: False (5.0)
+degree_H > 23: True (1255.0/220.0)
+
+Number of Leaves  : 	25
+
+Size of the tree : 	49
+
+
+Time taken to build model: 0.05 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        3602               72.0832 %
+Incorrectly Classified Instances      1395               27.9168 %
+Kappa statistic                          0.4417
+Mean absolute error                      0.3723
+Root mean squared error                  0.4382
+Relative absolute error                 74.4618 %
+Root relative squared error             87.6485 %
+Total Number of Instances             4997     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.661    0.219    0.751      0.661    0.703      0.445    0.771     0.745     True
+                 0.781    0.339    0.697      0.781    0.737      0.445    0.771     0.725     False
+Weighted Avg.    0.721    0.279    0.724      0.721    0.720      0.445    0.771     0.735     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 1651  848 |    a = True
+  547 1951 |    b = False
+

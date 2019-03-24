@@ -1,0 +1,115 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
+Relation:     grafo
+Instances:    13453
+Attributes:   15
+              degree_H
+              degree_L
+              short_path
+              clustering_H
+              clustering_L
+              betweenness_centrality_H
+              betweenness_centrality_L
+              closeness_centrality_H
+              closeness_centrality_L
+              eccentricity_H
+              eccentricity_L
+              eigenCentrality_H
+              eigenCentrality_L
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+short_path <= 3
+|   short_path <= 2: True (6519.0/2.0)
+|   short_path > 2
+|   |   clustering_H <= 0.527778: True (47.0/4.0)
+|   |   clustering_H > 0.527778
+|   |   |   clustering_L <= 0.088589
+|   |   |   |   eccentricity_L <= 13
+|   |   |   |   |   degree_H <= 36: False (2.0)
+|   |   |   |   |   degree_H > 36: True (3.0)
+|   |   |   |   eccentricity_L > 13: True (5.0)
+|   |   |   clustering_L > 0.088589
+|   |   |   |   closeness_centrality_L <= 0.110042
+|   |   |   |   |   betweenness_centrality_H <= 0.000034: False (3.0)
+|   |   |   |   |   betweenness_centrality_H > 0.000034: True (5.0)
+|   |   |   |   closeness_centrality_L > 0.110042: False (20.0/1.0)
+short_path > 3
+|   betweenness_centrality_L <= 0.000257
+|   |   betweenness_centrality_H <= 0.000782: False (6563.0/108.0)
+|   |   betweenness_centrality_H > 0.000782
+|   |   |   short_path <= 4
+|   |   |   |   clustering_H <= 0.220588: True (5.0/1.0)
+|   |   |   |   clustering_H > 0.220588
+|   |   |   |   |   closeness_centrality_L <= 0.130228: False (22.0/3.0)
+|   |   |   |   |   closeness_centrality_L > 0.130228: True (2.0)
+|   |   |   short_path > 4
+|   |   |   |   clustering_H <= 0.070565
+|   |   |   |   |   clustering_H <= 0.041772: True (5.0/1.0)
+|   |   |   |   |   clustering_H > 0.041772
+|   |   |   |   |   |   degree_L <= 1
+|   |   |   |   |   |   |   betweenness_centrality_H <= 0.002592: False (7.0)
+|   |   |   |   |   |   |   betweenness_centrality_H > 0.002592: True (4.0/1.0)
+|   |   |   |   |   |   degree_L > 1: False (2.0)
+|   |   |   |   clustering_H > 0.070565
+|   |   |   |   |   closeness_centrality_H <= 0.12965
+|   |   |   |   |   |   degree_H <= 13: False (22.0)
+|   |   |   |   |   |   degree_H > 13
+|   |   |   |   |   |   |   eccentricity_L <= 13
+|   |   |   |   |   |   |   |   clustering_L <= 0.115865
+|   |   |   |   |   |   |   |   |   closeness_centrality_L <= 0.000029: False (3.0)
+|   |   |   |   |   |   |   |   |   closeness_centrality_L > 0.000029
+|   |   |   |   |   |   |   |   |   |   closeness_centrality_L <= 0.11119: True (8.0)
+|   |   |   |   |   |   |   |   |   |   closeness_centrality_L > 0.11119: False (4.0/1.0)
+|   |   |   |   |   |   |   |   clustering_L > 0.115865: False (14.0)
+|   |   |   |   |   |   |   eccentricity_L > 13: False (37.0/4.0)
+|   |   |   |   |   closeness_centrality_H > 0.12965: False (122.0/1.0)
+|   betweenness_centrality_L > 0.000257
+|   |   eccentricity_L <= 13
+|   |   |   short_path <= 4
+|   |   |   |   betweenness_centrality_L <= 0.000361: False (2.0)
+|   |   |   |   betweenness_centrality_L > 0.000361: True (6.0/1.0)
+|   |   |   short_path > 4: False (10.0/1.0)
+|   |   eccentricity_L > 13
+|   |   |   short_path <= 5: True (8.0)
+|   |   |   short_path > 5: False (3.0/1.0)
+
+Number of Leaves  : 	28
+
+Size of the tree : 	55
+
+
+Time taken to build model: 0.25 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances       13270               98.6397 %
+Incorrectly Classified Instances       183                1.3603 %
+Kappa statistic                          0.9728
+Mean absolute error                      0.023 
+Root mean squared error                  0.1142
+Relative absolute error                  4.5997 %
+Root relative squared error             22.844  %
+Total Number of Instances            13453     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.978    0.005    0.995      0.978    0.986      0.973    0.987     0.985     True
+                 0.995    0.022    0.978      0.995    0.987      0.973    0.987     0.978     False
+Weighted Avg.    0.986    0.014    0.987      0.986    0.986      0.973    0.987     0.982     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 6578  149 |    a = True
+   34 6692 |    b = False
+

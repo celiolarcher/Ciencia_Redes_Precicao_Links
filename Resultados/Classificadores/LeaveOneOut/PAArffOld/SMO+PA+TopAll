@@ -1,0 +1,65 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007" -calibrator "weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4"
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R1-2,5,7,9-13
+Instances:    49750
+Attributes:   6
+              short_path
+              clustering_H
+              betweenness_centrality_H
+              closeness_centrality_H
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+SMO
+
+Kernel used:
+  Linear Kernel: K(x,y) = <x,y>
+
+Classifier for classes: True, False
+
+BinarySMO
+
+Machine linear: showing attribute weights, not support vectors.
+
+        -0.0028 * (normalized) short_path
+ +       0.7527 * (normalized) clustering_H
+ +       0.9608 * (normalized) betweenness_centrality_H
+ +      -3.7641 * (normalized) closeness_centrality_H
+ +      -1.534  * (normalized) common_neighbors
+ +       1.7477
+
+Number of kernel evaluations: 188718348 (45.393% cached)
+
+
+
+Time taken to build model: 58.91 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances       33492               67.3206 %
+Incorrectly Classified Instances     16258               32.6794 %
+Kappa statistic                          0.3464
+Mean absolute error                      0.3268
+Root mean squared error                  0.5717
+Relative absolute error                 65.3588 %
+Root relative squared error            114.3318 %
+Total Number of Instances            49750     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.607    0.260    0.700      0.607    0.650      0.350    0.673     0.621     True
+                 0.740    0.393    0.653      0.740    0.694      0.350    0.673     0.613     False
+Weighted Avg.    0.673    0.327    0.676      0.673    0.672      0.350    0.673     0.617     
+
+=== Confusion Matrix ===
+
+     a     b   <-- classified as
+ 15091  9784 |     a = True
+  6474 18401 |     b = False
+

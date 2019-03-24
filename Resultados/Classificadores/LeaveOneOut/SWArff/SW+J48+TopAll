@@ -1,0 +1,116 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R3-5,7,10-14
+Instances:    5000
+Attributes:   6
+              degree_H
+              degree_L
+              betweenness_centrality_H
+              closeness_centrality_H
+              closeness_centrality_L
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+degree_H <= 9
+|   degree_H <= 8: True (547.0/73.0)
+|   degree_H > 8
+|   |   degree_L <= 8
+|   |   |   closeness_centrality_H <= 0.151136: True (63.0/5.0)
+|   |   |   closeness_centrality_H > 0.151136
+|   |   |   |   degree_L <= 7: True (329.0/76.0)
+|   |   |   |   degree_L > 7
+|   |   |   |   |   closeness_centrality_H <= 0.161235
+|   |   |   |   |   |   betweenness_centrality_H <= 0.000283
+|   |   |   |   |   |   |   closeness_centrality_L <= 0.146122: False (10.0)
+|   |   |   |   |   |   |   closeness_centrality_L > 0.146122: True (113.0/40.0)
+|   |   |   |   |   |   betweenness_centrality_H > 0.000283: True (271.0/65.0)
+|   |   |   |   |   closeness_centrality_H > 0.161235
+|   |   |   |   |   |   closeness_centrality_L <= 0.155925
+|   |   |   |   |   |   |   betweenness_centrality_H <= 0.000971: False (78.0/20.0)
+|   |   |   |   |   |   |   betweenness_centrality_H > 0.000971
+|   |   |   |   |   |   |   |   closeness_centrality_L <= 0.154997: True (16.0/1.0)
+|   |   |   |   |   |   |   |   closeness_centrality_L > 0.154997
+|   |   |   |   |   |   |   |   |   closeness_centrality_H <= 0.163856: True (2.0)
+|   |   |   |   |   |   |   |   |   closeness_centrality_H > 0.163856: False (3.0)
+|   |   |   |   |   |   closeness_centrality_L > 0.155925: True (222.0/52.0)
+|   |   degree_L > 8
+|   |   |   closeness_centrality_L <= 0.16123
+|   |   |   |   closeness_centrality_H <= 0.156149: True (107.0/29.0)
+|   |   |   |   closeness_centrality_H > 0.156149
+|   |   |   |   |   betweenness_centrality_H <= 0.000605
+|   |   |   |   |   |   closeness_centrality_L <= 0.152296: False (62.0/17.0)
+|   |   |   |   |   |   closeness_centrality_L > 0.152296: True (158.0/73.0)
+|   |   |   |   |   betweenness_centrality_H > 0.000605
+|   |   |   |   |   |   closeness_centrality_H <= 0.167465
+|   |   |   |   |   |   |   closeness_centrality_L <= 0.158601: True (90.0/20.0)
+|   |   |   |   |   |   |   closeness_centrality_L > 0.158601
+|   |   |   |   |   |   |   |   betweenness_centrality_H <= 0.000976: False (27.0/8.0)
+|   |   |   |   |   |   |   |   betweenness_centrality_H > 0.000976: True (13.0/3.0)
+|   |   |   |   |   |   closeness_centrality_H > 0.167465: False (20.0/4.0)
+|   |   |   closeness_centrality_L > 0.16123
+|   |   |   |   betweenness_centrality_H <= 0.000467: False (4.0/1.0)
+|   |   |   |   betweenness_centrality_H > 0.000467: True (84.0/18.0)
+degree_H > 9
+|   betweenness_centrality_H <= 0.000292: False (235.0/20.0)
+|   betweenness_centrality_H > 0.000292
+|   |   degree_L <= 8
+|   |   |   degree_H <= 10
+|   |   |   |   degree_L <= 7: True (173.0/50.0)
+|   |   |   |   degree_L > 7
+|   |   |   |   |   closeness_centrality_L <= 0.16224
+|   |   |   |   |   |   betweenness_centrality_H <= 0.000777: False (206.0/99.0)
+|   |   |   |   |   |   betweenness_centrality_H > 0.000777: True (140.0/55.0)
+|   |   |   |   |   closeness_centrality_L > 0.16224
+|   |   |   |   |   |   closeness_centrality_H <= 0.166611: True (17.0)
+|   |   |   |   |   |   closeness_centrality_H > 0.166611
+|   |   |   |   |   |   |   closeness_centrality_H <= 0.167664: False (5.0/1.0)
+|   |   |   |   |   |   |   closeness_centrality_H > 0.167664: True (20.0/4.0)
+|   |   |   degree_H > 10
+|   |   |   |   betweenness_centrality_H <= 0.001001: False (107.0/21.0)
+|   |   |   |   betweenness_centrality_H > 0.001001
+|   |   |   |   |   degree_H <= 11: True (107.0/41.0)
+|   |   |   |   |   degree_H > 11
+|   |   |   |   |   |   closeness_centrality_H <= 0.168124: False (11.0)
+|   |   |   |   |   |   closeness_centrality_H > 0.168124
+|   |   |   |   |   |   |   degree_H <= 12: True (24.0/10.0)
+|   |   |   |   |   |   |   degree_H > 12: False (2.0)
+|   |   degree_L > 8: False (1734.0/428.0)
+
+Number of Leaves  : 	33
+
+Size of the tree : 	65
+
+
+Time taken to build model: 0.05 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        3659               73.18   %
+Incorrectly Classified Instances      1341               26.82   %
+Kappa statistic                          0.4636
+Mean absolute error                      0.3647
+Root mean squared error                  0.4341
+Relative absolute error                 72.9346 %
+Root relative squared error             86.8284 %
+Total Number of Instances             5000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.794    0.330    0.706      0.794    0.747      0.467    0.781     0.743     True
+                 0.670    0.206    0.764      0.670    0.714      0.467    0.781     0.768     False
+Weighted Avg.    0.732    0.268    0.735      0.732    0.731      0.467    0.781     0.755     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 1984  516 |    a = True
+  825 1675 |    b = False
+

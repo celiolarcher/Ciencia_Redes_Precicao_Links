@@ -1,0 +1,74 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.J48 -C 0.25 -M 2
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R4-11,13
+Instances:    12251
+Attributes:   6
+              degree_H
+              degree_L
+              short_path
+              eigenCentrality_H
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+J48 pruned tree
+------------------
+
+short_path <= 3
+|   short_path <= 2
+|   |   common_neighbors <= 1
+|   |   |   degree_H <= 11
+|   |   |   |   eigenCentrality_H <= 0.013412: True (220.0/10.0)
+|   |   |   |   eigenCentrality_H > 0.013412
+|   |   |   |   |   degree_L <= 4
+|   |   |   |   |   |   degree_L <= 2
+|   |   |   |   |   |   |   degree_H <= 7: False (6.0/1.0)
+|   |   |   |   |   |   |   degree_H > 7: True (2.0)
+|   |   |   |   |   |   degree_L > 2: False (6.0)
+|   |   |   |   |   degree_L > 4: True (9.0)
+|   |   |   degree_H > 11: True (1454.0/36.0)
+|   |   common_neighbors > 1: True (1429.0/9.0)
+|   short_path > 2
+|   |   degree_H <= 16
+|   |   |   eigenCentrality_H <= 0.000917: True (119.0/23.0)
+|   |   |   eigenCentrality_H > 0.000917
+|   |   |   |   degree_H <= 12: False (546.0/235.0)
+|   |   |   |   degree_H > 12: True (236.0/93.0)
+|   |   degree_H > 16: True (1862.0/398.0)
+short_path > 3: False (6362.0/1128.0)
+
+Number of Leaves  : 	12
+
+Size of the tree : 	23
+
+
+Time taken to build model: 0.07 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances       10297               84.0503 %
+Incorrectly Classified Instances      1954               15.9497 %
+Kappa statistic                          0.681 
+Mean absolute error                      0.2473
+Root mean squared error                  0.3526
+Relative absolute error                 49.4507 %
+Root relative squared error             70.5189 %
+Total Number of Instances            12251     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.776    0.095    0.891      0.776    0.830      0.687    0.871     0.890     True
+                 0.905    0.224    0.802      0.905    0.850      0.687    0.871     0.806     False
+Weighted Avg.    0.841    0.159    0.846      0.841    0.840      0.687    0.871     0.848     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 4756 1370 |    a = True
+  584 5541 |    b = False
+

@@ -1,0 +1,83 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007" -calibrator "weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4"
+Relation:     grafo
+Instances:    4997
+Attributes:   15
+              degree_H
+              degree_L
+              short_path
+              clustering_H
+              clustering_L
+              betweenness_centrality_H
+              betweenness_centrality_L
+              closeness_centrality_H
+              closeness_centrality_L
+              eccentricity_H
+              eccentricity_L
+              eigenCentrality_H
+              eigenCentrality_L
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+SMO
+
+Kernel used:
+  Linear Kernel: K(x,y) = <x,y>
+
+Classifier for classes: True, False
+
+BinarySMO
+
+Machine linear: showing attribute weights, not support vectors.
+
+        -8.8076 * (normalized) degree_H
+ +      -2.2184 * (normalized) degree_L
+ +       0.0284 * (normalized) short_path
+ +       0.7308 * (normalized) clustering_H
+ +      -0.58   * (normalized) clustering_L
+ +       2.2204 * (normalized) betweenness_centrality_H
+ +      -0.6862 * (normalized) betweenness_centrality_L
+ +      -3.2022 * (normalized) closeness_centrality_H
+ +       1.933  * (normalized) closeness_centrality_L
+ +      -0.4289 * (normalized) eccentricity_H
+ +       0.9936 * (normalized) eccentricity_L
+ +       2.7007 * (normalized) eigenCentrality_H
+ +      -2.3433 * (normalized) eigenCentrality_L
+ +      -0.5547 * (normalized) common_neighbors
+ +       0.8828
+
+Number of kernel evaluations: 559351 (69.336% cached)
+
+
+
+Time taken to build model: 0.18 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        3224               64.5187 %
+Incorrectly Classified Instances      1773               35.4813 %
+Kappa statistic                          0.2905
+Mean absolute error                      0.3548
+Root mean squared error                  0.5957
+Relative absolute error                 70.9626 %
+Root relative squared error            119.1323 %
+Total Number of Instances             4997     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.361    0.070    0.837      0.361    0.504      0.353    0.645     0.622     True
+                 0.930    0.639    0.592      0.930    0.724      0.353    0.645     0.586     False
+Weighted Avg.    0.645    0.355    0.715      0.645    0.614      0.353    0.645     0.604     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+  902 1597 |    a = True
+  176 2322 |    b = False
+

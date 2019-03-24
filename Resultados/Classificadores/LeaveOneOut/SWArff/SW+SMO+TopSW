@@ -1,0 +1,65 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007" -calibrator "weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4"
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R3-6,8-11,13
+Instances:    5000
+Attributes:   6
+              degree_H
+              degree_L
+              betweenness_centrality_L
+              eigenCentrality_H
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+SMO
+
+Kernel used:
+  Linear Kernel: K(x,y) = <x,y>
+
+Classifier for classes: True, False
+
+BinarySMO
+
+Machine linear: showing attribute weights, not support vectors.
+
+         0.0011 * (normalized) degree_H
+ +       0.0001 * (normalized) degree_L
+ +      -0.0003 * (normalized) betweenness_centrality_L
+ +       0.0004 * (normalized) eigenCentrality_H
+ +      -7.9971 * (normalized) common_neighbors
+ +       0.9989
+
+Number of kernel evaluations: 404084 (51.019% cached)
+
+
+
+Time taken to build model: 0.09 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        4747               94.94   %
+Incorrectly Classified Instances       253                5.06   %
+Kappa statistic                          0.8988
+Mean absolute error                      0.0506
+Root mean squared error                  0.2249
+Relative absolute error                 10.12   %
+Root relative squared error             44.9889 %
+Total Number of Instances             5000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.900    0.001    0.999      0.900    0.947      0.903    0.949     0.949     True
+                 0.999    0.100    0.909      0.999    0.952      0.903    0.949     0.908     False
+Weighted Avg.    0.949    0.051    0.954      0.949    0.949      0.903    0.949     0.929     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 2249  251 |    a = True
+    2 2498 |    b = False
+

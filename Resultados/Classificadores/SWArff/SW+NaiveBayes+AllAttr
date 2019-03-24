@@ -1,0 +1,144 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.bayes.NaiveBayes 
+Relation:     grafo
+Instances:    5000
+Attributes:   15
+              degree_H
+              degree_L
+              short_path
+              clustering_H
+              clustering_L
+              betweenness_centrality_H
+              betweenness_centrality_L
+              closeness_centrality_H
+              closeness_centrality_L
+              eccentricity_H
+              eccentricity_L
+              eigenCentrality_H
+              eigenCentrality_L
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Naive Bayes Classifier
+
+                             Class
+Attribute                     True   False
+                             (0.5)   (0.5)
+===========================================
+degree_H
+  mean                       9.2472 10.1072
+  std. dev.                  0.9358  0.9306
+  weight sum                   2500    2500
+  precision                       1       1
+
+degree_L
+  mean                            8   8.866
+  std. dev.                  0.9637  1.0116
+  weight sum                   2500    2500
+  precision                       1       1
+
+short_path
+  mean                       2.4204   6.256
+  std. dev.                  1.3241  1.0561
+  weight sum                   2500    2500
+  precision                       1       1
+
+clustering_H
+  mean                       0.5302  0.5302
+  std. dev.                  0.0998  0.0901
+  weight sum                   2500    2500
+  precision                   0.007   0.007
+
+clustering_L
+  mean                       0.3981  0.4006
+  std. dev.                   0.109  0.0999
+  weight sum                   2500    2500
+  precision                   0.006   0.006
+
+betweenness_centrality_H
+  mean                       0.0007  0.0008
+  std. dev.                  0.0004  0.0005
+  weight sum                   2500    2500
+  precision                       0       0
+
+betweenness_centrality_L
+  mean                       0.0002  0.0003
+  std. dev.                  0.0002  0.0003
+  weight sum                   2500    2500
+  precision                       0       0
+
+closeness_centrality_H
+  mean                       0.1611  0.1629
+  std. dev.                  0.0058   0.005
+  weight sum                   2500    2500
+  precision                       0       0
+
+closeness_centrality_L
+  mean                       0.1554  0.1557
+  std. dev.                  0.0058  0.0055
+  weight sum                   2500    2500
+  precision                       0       0
+
+eccentricity_H
+  mean                       9.0288   9.038
+  std. dev.                  0.3298  0.3003
+  weight sum                   2500    2500
+  precision                       1       1
+
+eccentricity_L
+  mean                       8.7608  8.6956
+  std. dev.                  0.4512  0.4645
+  weight sum                   2500    2500
+  precision                       1       1
+
+eigenCentrality_H
+  mean                       0.0089  0.0111
+  std. dev.                  0.0025  0.0028
+  weight sum                   2500    2500
+  precision                       0       0
+
+eigenCentrality_L
+  mean                       0.0073   0.008
+  std. dev.                  0.0021  0.0019
+  weight sum                   2500    2500
+  precision                       0       0
+
+common_neighbors
+  mean                       3.9584  0.0024
+  std. dev.                  1.9148  0.1667
+  weight sum                   2500    2500
+  precision                       1       1
+
+
+
+Time taken to build model: 0.01 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances        4745               94.9    %
+Incorrectly Classified Instances       255                5.1    %
+Kappa statistic                          0.898 
+Mean absolute error                      0.0537
+Root mean squared error                  0.2237
+Relative absolute error                 10.7499 %
+Root relative squared error             44.7458 %
+Total Number of Instances             5000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.905    0.007    0.992      0.905    0.947      0.901    0.961     0.974     True
+                 0.993    0.095    0.913      0.993    0.951      0.901    0.961     0.935     False
+Weighted Avg.    0.949    0.051    0.952      0.949    0.949      0.901    0.961     0.954     
+
+=== Confusion Matrix ===
+
+    a    b   <-- classified as
+ 2263  237 |    a = True
+   18 2482 |    b = False
+
