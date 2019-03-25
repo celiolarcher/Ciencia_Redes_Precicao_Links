@@ -1,0 +1,61 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.functions.SMO -C 1.0 -L 0.001 -P 1.0E-12 -N 0 -V -1 -W 1 -K "weka.classifiers.functions.supportVector.PolyKernel -E 1.0 -C 250007" -calibrator "weka.classifiers.functions.Logistic -R 1.0E-8 -M -1 -num-decimal-places 4"
+Relation:     grafo-weka.filters.unsupervised.attribute.Remove-R1,3-11,13
+Instances:    50000
+Attributes:   4
+              degree_L
+              eigenCentrality_H
+              common_neighbors
+              has_edge
+Test mode:    5-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+SMO
+
+Kernel used:
+  Linear Kernel: K(x,y) = <x,y>
+
+Classifier for classes: True, False
+
+BinarySMO
+
+Machine linear: showing attribute weights, not support vectors.
+
+         0.1232 * (normalized) degree_L
+ +       0      * (normalized) eigenCentrality_H
+ +      -4.7834 * (normalized) common_neighbors
+ +       0.9852
+
+Number of kernel evaluations: 23377598 (44.88% cached)
+
+
+
+Time taken to build model: 5.98 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances       49631               99.262  %
+Incorrectly Classified Instances       369                0.738  %
+Kappa statistic                          0.9852
+Mean absolute error                      0.0074
+Root mean squared error                  0.0859
+Relative absolute error                  1.476  %
+Root relative squared error             17.1814 %
+Total Number of Instances            50000     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.990    0.005    0.995      0.990    0.993      0.985    0.993     0.990     True
+                 0.995    0.010    0.990      0.995    0.993      0.985    0.993     0.988     False
+Weighted Avg.    0.993    0.007    0.993      0.993    0.993      0.985    0.993     0.989     
+
+=== Confusion Matrix ===
+
+     a     b   <-- classified as
+ 24747   253 |     a = True
+   116 24884 |     b = False
+
