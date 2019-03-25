@@ -1,0 +1,66 @@
+java -cp .:weka.jar:classifierBasedAttributeSelection.jar execute
+.SMO done
+Sumary:
+common_neighbors	0.48424258232841133
+short_path	0.20666143789428248
+degree_H	0.17101862842435633
+degree_L	0.17087158715851702
+eccentricity_L	0.14905775125833776
+closeness_centrality_L	0.14876044190795856
+clustering_H	0.11634592088786477
+betweenness_centrality_H	0.09030555475621804
+clustering_L	0.043470972179916356
+eccentricity_H	0.031139021472091466
+betweenness_centrality_L	0.013691032595686936
+eigenCentrality_L	0.00386502155492785
+eigenCentrality_H	0.00274994572977183
+closeness_centrality_H	-0.030511990924594556
+.NaiveBayes done
+Sumary:
+common_neighbors	0.4845141160458474
+closeness_centrality_L	0.2462373857358081
+degree_H	0.217891598626771
+degree_L	0.2106382299365438
+short_path	0.20672249422002698
+clustering_H	0.15654389881297714
+betweenness_centrality_H	0.15475572766717682
+closeness_centrality_H	0.14849627375375063
+eccentricity_L	0.13126027692027653
+clustering_L	0.122892660848403
+eccentricity_H	0.10240832398108446
+betweenness_centrality_L	0.09590536232694835
+eigenCentrality_L	0.0029587330554997626
+eigenCentrality_H	0.0017295527218194051
+.J48 done
+Sumary:
+short_path	0.4858205353504398
+common_neighbors	0.48335514088135734
+closeness_centrality_L	0.21917768746811028
+clustering_L	0.19930582178651624
+degree_H	0.18691713100808782
+degree_L	0.17642639531508353
+clustering_H	0.14971045822107432
+eccentricity_L	0.14551095259622093
+closeness_centrality_H	0.14066104961516646
+eccentricity_H	0.12088917663565779
+betweenness_centrality_H	0.08843396123246972
+betweenness_centrality_L	0.0206141444901341
+eigenCentrality_L	0.0029587330554997626
+eigenCentrality_H	0.0015244397701249524
+.RandomForest done
+Sumary:
+short_path	0.49178608879559693
+common_neighbors	0.4833389183818644
+degree_H	0.23561783146202164
+degree_L	0.22827235994181283
+closeness_centrality_L	0.22349209593410957
+eccentricity_L	0.21698224069494876
+clustering_L	0.19493788340500717
+betweenness_centrality_H	0.16388962715569688
+clustering_H	0.16380262471704832
+closeness_centrality_H	0.15726593533959365
+betweenness_centrality_L	0.14745984610944862
+eccentricity_H	0.14474641757924844
+eigenCentrality_L	0.13516748478662488
+eigenCentrality_H	0.10892236485919682
+Analyze in ../Bases/gc_data.arff done.

@@ -1,0 +1,66 @@
+java -cp .:weka.jar:classifierBasedAttributeSelection.jar execute
+.SMO done
+Sumary:
+closeness_centrality_H	0.21063886279291344
+common_neighbors	0.19585306655473156
+closeness_centrality_L	0.19198139745614218
+degree_L	0.18971784365068256
+degree_H	0.17764030195819758
+eigenCentrality_L	0.15217468534916412
+eigenCentrality_H	0.12552561514321692
+eccentricity_H	0.12423862159947219
+betweenness_centrality_L	0.08867870635031694
+eccentricity_L	0.08530310553212472
+clustering_H	0.07168155136687382
+betweenness_centrality_H	0.018160167103080216
+short_path	0.01681665967072432
+clustering_L	-0.06859661929414268
+.NaiveBayes done
+Sumary:
+closeness_centrality_H	0.2728823615636265
+closeness_centrality_L	0.2617597526767808
+degree_H	0.24398626111686667
+common_neighbors	0.24389274230143038
+degree_L	0.21632661825003902
+eigenCentrality_L	0.20845483605469145
+betweenness_centrality_H	0.1944629113688328
+eccentricity_H	0.1903051896566657
+clustering_L	0.18137066167935562
+betweenness_centrality_L	0.16481784609983757
+clustering_H	0.15328478549108177
+eigenCentrality_H	0.131151032432751
+short_path	0.016256024438103533
+eccentricity_L	0.009592225949811184
+.J48 done
+Sumary:
+short_path	0.3308211370738306
+degree_H	0.25656214728790633
+common_neighbors	0.24093665673909131
+eigenCentrality_H	0.23708671637117135
+closeness_centrality_H	0.23294562487090814
+clustering_L	0.22661586279957618
+degree_L	0.22303779141431296
+closeness_centrality_L	0.202841078840939
+clustering_H	0.19130568270403164
+eccentricity_L	0.1731684556290684
+betweenness_centrality_H	0.14394452995040646
+eigenCentrality_L	0.1331897232938229
+eccentricity_H	0.13184109882934564
+betweenness_centrality_L	0.02832711693884221
+.RandomForest done
+Sumary:
+short_path	0.3856686122049211
+degree_H	0.31877890823322474
+degree_L	0.27769487697135675
+common_neighbors	0.24234350076955358
+betweenness_centrality_H	0.23136288282809847
+clustering_L	0.2305774284115224
+closeness_centrality_H	0.22660328010814867
+eigenCentrality_H	0.21893312545227195
+clustering_H	0.2105978732275422
+eigenCentrality_L	0.1954576410938913
+eccentricity_H	0.1930354127939129
+closeness_centrality_L	0.19261559972412423
+eccentricity_L	0.1832901383864025
+betweenness_centrality_L	0.17739996466784114
+Analyze in ../Bases/newmovies.arff done.
